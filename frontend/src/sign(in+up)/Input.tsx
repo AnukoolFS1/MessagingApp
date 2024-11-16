@@ -5,12 +5,12 @@ type Props = {
     value:string
 }
 
-export default function Input({}: Props) {
+export default function Input({id, className, value, name}: Props) {
 
     return (
-        <div>
-            <input type="text" id="" className="" name=""  />
-            <label htmlFor=""></label>
+        <div className="input">
+            <input type="text" id={id} className={className} name={name} required  />
+            <label htmlFor={id}>{value}</label>
         </div>
     )
 }

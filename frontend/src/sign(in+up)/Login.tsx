@@ -3,12 +3,14 @@ import Input from "./Input";
 export default function Login() {
 
     return (
-        <div>
+        <fieldset>
             <h1>Login</h1>
-            <div>
-                <Input id="" className="" name="" value="" />
 
-            </div>
-        </div>
+            <form>
+                <Input id="email-login" className="email" name="email" value="Email" />
+                <Input id="password" className="password" name="password" value="Password" />
+                <button>Login</button>
+            </form>
+        </fieldset>
     )
 }

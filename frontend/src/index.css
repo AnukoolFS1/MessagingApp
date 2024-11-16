@@ -52,6 +52,67 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.login, .signup{
+  display: flex;
+  gap: 2rem;
+}
+
+.signup{
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.login{
+  flex-direction: column;
+}
+
+.login button{
+  align-self: start;
+  width: 7rem;
+}
+
+.input {
+  position: relative;
+}
+
+.signup select{
+  width: 18vw;
+  height: 9vh;
+  font-size: 1.5rem;
+  outline: none;
+}
+
+
+.input > input {
+  width: 18vw;
+  height: 9vh;
+  font-size: 1.5rem;
+  outline: none;
+}
+
+.input > input:focus{
+  outline: none;
+}
+
+.input > input + label{
+  position: absolute;
+  top: calc(100% - 7.4vh);
+  left: 12px;
+  font-size: 1.3rem;
+  color: grey;
+  transition: .1s all linear;
+}
+
+.input > input:focus + label{
+  top: calc(100% - 13vh);
+  background-color: #242424;
+}
+
+.input > input:valid + label {
+  top: calc(100% - 13vh);
+  background-color: #242424;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
