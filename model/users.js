@@ -11,12 +11,4 @@ const usersSchema = new Schema({
     isOnline: {type: Boolean, default: false}
 })
 
-
-usersSchema.pre('save', async (next) => {
-    if(!this.isModified('password')) return next();
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-});
-
 module.exports = new mongoose.model('Users', usersSchema)
