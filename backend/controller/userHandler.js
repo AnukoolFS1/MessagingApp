@@ -7,13 +7,24 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10)
     const password = await bcrypt.hash(req.body.password, salt)
     const user = { name, email, phone, role, password }
+    for(let key in user){
+        if(user[key] === ""){
+            return res.status(400).json({msg: `error!, field ${key} is empty`})
+        }
+    }
+
     console.log(user)
+    try{
+        const result = await users.create(user)
 
-    await users.create(user)
-
-    res.end()
+        res.status(201).json({msg: "user created successfully"})
+    }
+    catch(err) {
+        console.log(err.message)
+        res.status(400).json({msg:err.message})
+    }
+    // res.status(201).json({ msg: "done" })
 }
-
 
 // login user
 const loginUser = async (req, res) => {

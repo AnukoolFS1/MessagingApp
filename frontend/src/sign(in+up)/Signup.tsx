@@ -18,11 +18,11 @@ interface UserData {
 
 export default function Signup({ className }: Props) {
     const [userData, setUserData] = useState<UserData>({
-        name:"",
+        name: "",
         phone: "",
-        email:"",
-        password:"",
-        role:""
+        email: "",
+        password: "",
+        role: ""
     })
     const navigate = useNavigate()
     const [value, setValue] = useState<string>("")
@@ -34,19 +34,36 @@ export default function Signup({ className }: Props) {
         navigate('../login')
     }
 
-    const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.currentTarget
-        setUserData((prev:UserData):UserData => {
-            return {...prev, [name]: value}
+    const handleUserInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = e.currentTarget
+        setUserData((prev: UserData): UserData => {
+            return { ...prev, [name]: value }
         })
     }
 
     const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/register', userData)
+
+        console.log(userData)
+        try {
+            await axios.post('http://localhost:5000/register', userData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-custom-user": "taquila"
+                }
+            })
+
+        } catch (err: any) {
+            console.log(err.message)
+            alert('something went wrong')
+        }
+
     }
 
-    const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue(e.target.value)
+    const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setValue(e.target.value)
+        handleUserInput(e)
+    }
     const role: string[] = ["--select--", 'Teacher', "Institute", "Student"]
 
     return (
