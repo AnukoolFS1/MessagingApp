@@ -66,9 +66,10 @@ button:focus-visible {
   flex-direction: column;
 }
 
-.login button{
+.login button, .signup button{
   align-self: start;
-  width: 7rem;
+  /* width: 7rem; */
+  margin: auto 4px;
 }
 
 .input {
@@ -76,16 +77,16 @@ button:focus-visible {
 }
 
 .signup select{
-  width: 18vw;
-  height: 9vh;
+  width: 308px;
+  height: 7vh;
   font-size: 1.5rem;
   outline: none;
 }
 
 
 .input > input {
-  width: 18vw;
-  height: 9vh;
+  width: 300px;
+  height: 7vh;
   font-size: 1.5rem;
   outline: none;
 }
@@ -96,7 +97,7 @@ button:focus-visible {
 
 .input > input + label{
   position: absolute;
-  top: calc(100% - 7.4vh);
+  top: calc(100% - 6.1vh);
   left: 12px;
   font-size: 1.3rem;
   color: grey;
@@ -104,13 +105,12 @@ button:focus-visible {
 }
 
 .input > input:focus + label{
-  top: calc(100% - 13vh);
+  top: calc(100% - 11vh);
   background-color: #242424;
 }
 
 .input > input:valid + label {
-  top: calc(100% - 13vh);
-  background-color: #242424;
+  display: none;
 }
 
 @media (prefers-color-scheme: light) {

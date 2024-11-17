@@ -1,10 +1,17 @@
 import Input from "./Input";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     className: string
 }
 
-export default function Login({className}:Props) {
+export default function Login({ className }: Props) {
+    const navigate = useNavigate()
+
+    const goToSignup = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        navigate('../signup')
+    }
 
     return (
         <fieldset>
@@ -13,7 +20,10 @@ export default function Login({className}:Props) {
             <form className={className}>
                 <Input id="email-login" className="email" name="email" value="Email" />
                 <Input id="password" className="password" name="password" value="Password" />
-                <button>Login</button>
+                <div>
+                    <button>Login</button>
+                    <button onClick={goToSignup}>New User?</button>
+                </div>
             </form>
         </fieldset>
     )
