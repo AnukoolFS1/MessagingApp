@@ -14,8 +14,8 @@ interface UserData {
 
 export default function Login({ className }: Props) {
     const [userData, setUserData] = useState<UserData>({
-        email:"",
-        password:""
+        email: "",
+        password: ""
     })
     const navigate = useNavigate()
 
@@ -25,21 +25,28 @@ export default function Login({ className }: Props) {
     }
 
     const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.currentTarget
-        setUserData((prev:UserData):UserData => {
-            return {...prev, [name]: value}
+        const { name, value } = e.currentTarget
+        setUserData((prev: UserData): UserData => {
+            return { ...prev, [name]: value }
         })
     }
 
     const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const data = await axios.post('http://localhost:5000/login', JSON.stringify(userData), {
-            headers:{
-            "Content-Type" :"application/json",
-            "X-custom-user":"taquila"
-        }})
 
-        console.log(data)
+        try {
+            const response = await axios.post('http://localhost:5000/login', userData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-custom-user": "taquila"
+                }
+            })
+
+            console.log(response)
+        }
+        catch(err: any) {
+            console.log(err.message)
+        }
     }
     return (
         <fieldset>

@@ -3,15 +3,15 @@ const bcrypt = require('bcrypt')
 
 //register user
 const registerUser = async (req, res) => {
-    const { name, email, phone, role } = req.body;
+    const { name, email, phone, role, password } = req.body;
     const salt = await bcrypt.genSalt(10)
-    const password = await bcrypt.hash(req.body.password, salt)
-    const user = { name, email, phone, role, password }
-    for(let key in user){
-        if(user[key] === ""){
-            return res.status(400).json({msg: `error!, field ${key} is empty`})
-        }
+    const hashPassword = await bcrypt.hash(password, salt)
+    const user = { name, email, phone, role, password: hashPassword }
+
+    if (!name || !email || !phone || !role || !password) {
+        return res.status(400).json({ msg: "All fields are required" });
     }
+    
 
     console.log(user)
     try{
@@ -33,13 +33,13 @@ const loginUser = async (req, res) => {
         const user = await users.findOne({ email });
 
         if (user === null) {
-            return res.send('no user found')
+            return res.status(404).json('no user found')
         }
 
         const isPassword = await bcrypt.compare(password, user.password)
 
         if (isPassword) {
-            return res.status(200).send('logged successfully');
+            return res.status(200).json('login successful');
         }
         res.end()
     }

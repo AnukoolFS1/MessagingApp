@@ -46,13 +46,15 @@ export default function Signup({ className }: Props) {
 
         console.log(userData)
         try {
-            await axios.post('http://localhost:5000/register', userData, {
+            let response = await axios.post('http://localhost:5000/register', userData, {
                 headers: {
                     "Content-Type": "application/json",
                     "X-custom-user": "taquila"
                 }
             })
 
+            alert(response.data.msg)
+            navigate('../login')
         } catch (err: any) {
             console.log(err.message)
             alert('something went wrong')
@@ -64,7 +66,7 @@ export default function Signup({ className }: Props) {
         setValue(e.target.value)
         handleUserInput(e)
     }
-    const role: string[] = ["--select--", 'Teacher', "Institute", "Student"]
+    const role: string[] = ["--select--", 'Teacher', "Student", "Institute"]
 
     return (
         <div>
