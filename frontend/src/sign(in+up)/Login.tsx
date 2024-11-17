@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./Input";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 type Props = {
     className: string
@@ -30,6 +31,10 @@ export default function Login({ className }: Props) {
         })
     }
 
+    const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        await axios.post('http://localhost:5000/login', userData)
+    }
     return (
         <fieldset>
             <h1>Login</h1>
@@ -38,7 +43,7 @@ export default function Login({ className }: Props) {
                 <Input id="email-login" className="email" name="email" value="Email" onChange={handleUserInput} />
                 <Input id="password" className="password" name="password" value="Password" onChange={handleUserInput} />
                 <div>
-                    <button>Login</button>
+                    <button onClick={handleOnSubmit}>Login</button>
                     <button onClick={goToSignup}>New User?</button>
                 </div>
             </form>

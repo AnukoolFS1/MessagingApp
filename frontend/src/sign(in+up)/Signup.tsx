@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Input from "./Input"
+import axios from "axios"
 
 type Props = {
     className: string
@@ -40,6 +41,11 @@ export default function Signup({ className }: Props) {
         })
     }
 
+    const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        await axios.post('http://localhost:5000/register', userData)
+    }
+
     const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue(e.target.value)
     const role: string[] = ["--select--", 'Teacher', "Institute", "Student"]
 
@@ -61,7 +67,7 @@ export default function Signup({ className }: Props) {
                     </div>
                     <Input id="password-signup" className="password" name="password" value="Password" onChange={handleUserInput} />
                     <div>
-                        <button>Signup</button>
+                        <button onClick={handleOnSubmit}>Signup</button>
                         <button onClick={GotoLogin}>Already have an account!</button>
                     </div>
                 </form>
