@@ -1,17 +1,21 @@
-// import Dashboard from "./dashboard/Dashboard"
-// import Login from "./sign(in+up)/Login"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import ChatApp from "./ChatApp"
+import Login from "./sign(in+up)/Login"
 import Signup from "./sign(in+up)/Signup"
 
 function App() {
 
   return (
-    <section>
-      <h1>Username</h1>
-      <hr />
-      {/* <Dashboard /> */}
-        {/* <Login className="login" /> */}
-        <Signup className="signup" />
-    </section>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to={"/chatapp/login"} />}></Route>
+
+        <Route path="/chatapp" element={<ChatApp />} >
+          <Route path="login" element={<Login className="login" />} />
+          <Route path="signup" element={<Signup className="signup" />} />
+        </Route>
+      </Routes>
+    </Router>
   )
 }
 
