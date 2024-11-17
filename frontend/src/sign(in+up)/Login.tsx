@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Input from "./Input";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
@@ -33,7 +33,13 @@ export default function Login({ className }: Props) {
 
     const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/login', userData)
+        const data = await axios.post('http://localhost:5000/login', JSON.stringify(userData), {
+            headers:{
+            "Content-Type" :"application/json",
+            "X-custom-user":"taquila"
+        }})
+
+        console.log(data)
     }
     return (
         <fieldset>

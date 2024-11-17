@@ -10,11 +10,21 @@ const PORT = process.env.PORT || 5000
 
 //connection to database
 connectDB()
+
 app.use(express.json())
 
 // accepting cors
-app.use((req, res, next)=>{
-    console.log(req.body)
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Methods", "OPTIONS")
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-custom-user")
+
+    const setting = req.get("X-custom-user")
+
+    if (setting === "taquila") {
+        cors()
+    }
+
     next()
 })
 
