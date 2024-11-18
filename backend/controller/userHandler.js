@@ -30,23 +30,27 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+        throw "error"
         const user = await users.findOne({ email });
 
         if (user === null) {
-            return res.status(404).json('no user found')
+            return res.status(404).json({msg:'some fields are wrong'})
         }
 
         const isPassword = await bcrypt.compare(password, user.password)
 
         if (isPassword) {
-            return res.status(200).json('login successful');
+            console.log('success')
+            return res.status(200).json({msg:'login successful'});
+        }else{
+            return res.status(404).json({msg:'some fields are wrong'})
         }
-        res.end()
     }
     catch {
-        console.error('some went wrong')
-        res.status(500)
-        res.end('some went wrong')
+        console.error('something went wrong')
+        res.writeHead(500, {"Content-Type":"application/json"})
+        res.end(JSON.stringify({msg:'something went wrong'}))
+        // res.status(500).json({msg:"server is unable to perform task"})
     }
 
 }

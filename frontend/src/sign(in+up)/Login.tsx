@@ -42,10 +42,10 @@ export default function Login({ className }: Props) {
                 }
             })
 
-            console.log(response)
+            alert(response.data.msg)
         }
         catch(err: any) {
-            console.log(err.message)
+            alert(err.response.data.msg)
         }
     }
     return (
