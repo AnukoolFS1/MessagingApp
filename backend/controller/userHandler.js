@@ -13,7 +13,6 @@ const registerUser = async (req, res) => {
     }
     
 
-    console.log(user)
     try{
         const result = await users.create(user)
 
