@@ -43,12 +43,15 @@ export default function Signup({ className }: Props) {
 
     const handleOnSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        const formData = new FormData()
 
+        for(const key in userData){
+            formData.append(key, userData[key as keyof UserData])
+        }
         console.log(userData)
         try {
-            let response = await axios.post('http://localhost:5000/register', userData, {
+            let response = await axios.post('http://localhost:5000/register', formData, {
                 headers: {
-                    "Content-Type": "application/json",
                     "X-custom-user": "taquila"
                 }
             })
