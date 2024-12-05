@@ -1,5 +1,9 @@
+require('dotenv').config()
 const users = require('../model/users')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const sKey = process.env.JWT_SKey
 
 //register user
 const registerUser = async (req, res) => {
@@ -11,44 +15,60 @@ const registerUser = async (req, res) => {
     if (!name || !email || !phone || !role || !password) {
         return res.status(400).json({ msg: "All fields are required" });
     }
-    
 
-    try{
+
+    try {
         const result = await users.create(user)
 
-        res.status(201).json({msg: "user created successfully"})
+        res.status(201).json({ msg: "user created successfully" })
     }
-    catch(err) {
+    catch (err) {
         console.log(err.message)
-        res.status(400).json({msg:err.message})
+        res.status(400).json({ msg: err.message })
     }
     // res.status(201).json({ msg: "done" })
 }
 
 // login user
 const loginUser = async (req, res) => {
+    console.log(req.cookie)
     try {
         const { email, password } = req.body;
-        throw "error"
         const user = await users.findOne({ email });
 
         if (user === null) {
-            return res.status(404).json({msg:'some fields are wrong'})
+            return res.status(404).json({ msg: 'some fields are wrong' })
         }
 
-        const isPassword = await bcrypt.compare(password, user.password)
+        const isPassword = await bcrypt.compare(password, user.password);
+
 
         if (isPassword) {
-            console.log('success')
-            return res.status(200).json({msg:'login successful'});
-        }else{
-            return res.status(404).json({msg:'some fields are wrong'})
+            const userData = {
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                role: user.role,
+                isOnline: user.isOnline
+            }
+            const token = jwt.sign(userData, sKey)
+            console.log(token)
+            return res.status(200)
+                .cookie('token', token, {
+                    httpOnly: true,
+                    secure: false, // Use `true` if running on HTTPS
+                    sameSite: 'Lax', // Prevent CSRF
+                    maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+                })
+                .json({ msg: 'login successful' });
+        } else {
+            return res.status(404).json({ msg: 'some fields are wrong' })
         }
     }
-    catch {
-        console.error('something went wrong')
-        res.writeHead(500, {"Content-Type":"application/json"})
-        res.end(JSON.stringify({msg:'something went wrong'}))
+    catch (err) {
+        console.error('something went wrong', err)
+        res.writeHead(500, { "Content-Type": "application/json" })
+        res.end(JSON.stringify({ msg: 'something went wrong' }))
         // res.status(500).json({msg:"server is unable to perform task"})
     }
 

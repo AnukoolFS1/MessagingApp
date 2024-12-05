@@ -35,17 +35,31 @@ export default function Login({ className }: Props) {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/login', userData, {
+            // const response = await axios.post('http://localhost:5000/login', userData, {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "X-custom-user": "taquila"
+            //     },
+            //     withCredentials: true
+            // })
+
+            const response = await fetch('http://localhost:5000/login', {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "X-custom-user": "taquila"
-                }
+                },
+                body:JSON.stringify(userData),
+                credentials: "include"
             })
 
-            alert(response.data.msg)
+            const data = await response.json()
+            console.log(data)
+
         }
-        catch(err: any) {
-            alert(err.response.data.msg)
+        catch (err: any) {
+            // alert(err.response.data.msg)
+            console.log(err)
         }
     }
     return (
