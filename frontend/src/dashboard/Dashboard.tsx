@@ -3,15 +3,6 @@ import Chat from "./Chat";
 import Conversations from "./Conversations";
 import { useEffect, useState } from "react";
 
-interface User {
-    id: string,
-    name: string,
-    email: string,
-    phone: string,
-    role: string,
-    isOnline: boolean
-}
-
 const Dashboard = () => {
     const [user, setUser] = useState<User>({
         id: "",
