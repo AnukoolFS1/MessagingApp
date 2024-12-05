@@ -35,27 +35,29 @@ export default function Login({ className }: Props) {
         e.preventDefault();
 
         try {
-            // const response = await axios.post('http://localhost:5000/login', userData, {
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "X-custom-user": "taquila"
-            //     },
-            //     withCredentials: true
-            // })
-
-            const response = await fetch('http://localhost:5000/login', {
-                method: "POST",
+            const response = await axios.post('http://localhost:5000/login', userData, {
                 headers: {
                     "Content-Type": "application/json",
                     "X-custom-user": "taquila"
                 },
-                body:JSON.stringify(userData),
-                credentials: "include"
+                withCredentials: true
             })
 
-            const data = await response.json()
+            const data = response.data
+            // const response = await fetch('http://localhost:5000/login', {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "X-custom-user": "taquila"
+            //     },
+            //     body:JSON.stringify(userData),
+            //     credentials: "include"
+            // })
+            // const data = await response.json()
+            
             console.log(data)
 
+            navigate('/chatapp')
         }
         catch (err: any) {
             // alert(err.response.data.msg)

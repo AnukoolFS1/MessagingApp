@@ -97,6 +97,7 @@ button:focus-visible {
 
 .input > input + label{
   position: absolute;
+  z-index: 2;
   top: calc(100% - 6.1vh);
   left: 12px;
   font-size: 1.3rem;
@@ -106,7 +107,8 @@ button:focus-visible {
 
 .input > input:focus + label{
   top: calc(100% - 11vh);
-  background-color: #242424;
+  background-color: #7b7b7b;
+  color: black;
 }
 
 .input > input:valid + label {
