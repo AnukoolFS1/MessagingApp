@@ -1,9 +1,8 @@
-require('dotenv').config()
 const users = require('../model/users')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const sKey = process.env.JWT_SKey
+const sKey = process.env.JWT_SKey;
 
 //register user
 const registerUser = async (req, res) => {
@@ -31,7 +30,7 @@ const registerUser = async (req, res) => {
 
 // login user
 const loginUser = async (req, res) => {
-    console.log(req.cookie)
+    console.log(req.cookies.token)
     try {
         const { email, password } = req.body;
         const user = await users.findOne({ email });
@@ -45,6 +44,7 @@ const loginUser = async (req, res) => {
 
         if (isPassword) {
             const userData = {
+                id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
@@ -52,13 +52,12 @@ const loginUser = async (req, res) => {
                 isOnline: user.isOnline
             }
             const token = jwt.sign(userData, sKey)
-            console.log(token)
             return res.status(200)
                 .cookie('token', token, {
                     httpOnly: true,
-                    secure: false, // Use `true` if running on HTTPS
-                    sameSite: 'Lax', // Prevent CSRF
-                    maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
+                    // secure: false, // Use `true` if running on HTTPS
+                    // sameSite: 'Lax', // Prevent CSRF
+                    maxAge:  60 * 60 * 1000 // 1 day in milliseconds
                 })
                 .json({ msg: 'login successful' });
         } else {
