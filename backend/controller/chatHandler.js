@@ -21,7 +21,7 @@ const initiateMessage = async (req, res) => {
     const { reciever, sender, message, conversation } = req.body;
 
     if (!conversation) {
-        const conversation = Conversation.findOne({userOne: sender, userTwo: reciever})
+        const conversation = await Conversation.findOne({userOne: sender, userTwo: reciever})
     }
 }
 
