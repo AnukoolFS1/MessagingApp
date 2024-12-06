@@ -8,8 +8,11 @@ interface User {
     role: string,
     isOnline: boolean
 }
+
 interface IS {
-    user: User
+    user: User,
+    conversations:any,
+    // messages:any
 }
 
 const initialState: IS = {
@@ -20,7 +23,9 @@ const initialState: IS = {
         phone: "",
         role: "",
         isOnline: false
-    }
+    },
+    conversations :[],
+    // messages: []
 }
 
 const userSlice = createSlice({
@@ -28,7 +33,9 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         updateUser: (state, action) => {
-            state.user = action.payload
+            state.user = action.payload.user;
+            state.conversations = action.payload.conversations;
+            // state.messages = action.payload.messages
         }
     }
 })

@@ -14,7 +14,8 @@ const initiateUser = async (req, res) => {
     if (token) {
         const user = jwt.verify(token, sKey)
 
-        const conversation = Conversation.find({users: user.email})
+        const conversation = await Conversation.find({users: user.email})
+
         res.status(200).json({user, conversation})
     } else {
         res.status(403).json({ msg: "auth failed" })

@@ -31,7 +31,6 @@ const registerUser = async (req, res) => {
 
 // login user
 const loginUser = async (req, res) => {
-    console.log(req.cookies.token)
     try {
         const { email, password } = req.body;
         const user = await users.findOne({ email });

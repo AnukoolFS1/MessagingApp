@@ -57,7 +57,7 @@ export default function Login({ className }: Props) {
             
             console.log(data)
 
-            navigate('/chatapp')
+            navigate('/chatapp/dashboard')
         }
         catch (err: any) {
             // alert(err.response.data.msg)

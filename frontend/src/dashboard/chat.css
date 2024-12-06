@@ -1,0 +1,35 @@
+.firstChat{
+    padding: 2rem;
+    flex-direction: column;
+    position: fixed;
+    border-radius: 1rem;
+    top: calc(50% - 14rem);
+    left: calc(50% - 18.5rem);
+    background-color: darkcyan;
+    transition: .3s all linear;
+    animation: comein .3s linear 1 forwards;
+}
+
+.firstChat input{
+    width: 20vw;
+    height: 10vh;
+    font-size: 1.5rem;
+    font-family: system-ui;
+}
+
+.firstChat textarea{
+    font-size: 1.2rem;
+    width: 40vw;
+    font-family: system-ui;
+}
+
+@keyframes comein {
+    from{
+        opacity: .3;
+        transform: translateY(30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

@@ -8,7 +8,7 @@ import { RootState } from "../redux/store";
 
 const Dashboard = () => {
     const dispatch = useDispatch()
-    const user = useSelector((state:RootState) => state.users.user)
+    const user = useSelector((state:RootState) => state.users)
     // const [user, setUser] = useState<User>({
     //     id: "",
     //     name: "",
@@ -37,7 +37,7 @@ const Dashboard = () => {
 
     return (
         <section>
-            <Conversations />
+            <Conversations conversation={user.conversations} />
             <Chat />
         </section>
     )
