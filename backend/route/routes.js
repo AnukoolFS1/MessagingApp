@@ -6,8 +6,9 @@ const { initiateUser } = require('../controller/chatHandler')
 
 const uploads = multer({dest:"uploads/"})
 
-//
-router.get('/chatapp', initiateUser)
+//chatapp
+router.get('/chatapp', initiateUser);
+router.post('/chatapp', )
 
 // users handlings
 router.post('/register', uploads.single("file") ,registerUser)

@@ -1,3 +1,4 @@
+// userHandler.js
 const users = require('../model/users')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');

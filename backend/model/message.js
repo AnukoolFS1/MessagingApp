@@ -8,7 +8,7 @@ const MessagesSchema = new Schema({
     timeStamp: {type:Date, default:Date.now},
     status: {type: String, enum : ["sent", "delivered", "read"], default: "sent"},
     conversationId : {type: mongoose.Schema.Types.ObjectId, ref: "conversation"}
-})
+}, {timestamps: true})
 
 const Messages = new mongoose.model("messages", MessagesSchema);
 
