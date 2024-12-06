@@ -1,27 +1,30 @@
 import axios from "axios";
 import Chat from "./Chat";
 import Conversations from "./Conversations";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userActionUpdate } from '../redux/userSlice';
+import { RootState } from "../redux/store";
 
 const Dashboard = () => {
-    const [user, setUser] = useState<User>({
-        id: "",
-        name: "",
-        email: "",
-        phone: "",
-        role: "",
-        isOnline: false
-    })
+    const dispatch = useDispatch()
+    const user = useSelector((state:RootState) => state.users.user)
+    // const [user, setUser] = useState<User>({
+    //     id: "",
+    //     name: "",
+    //     email: "",
+    //     phone: "",
+    //     role: "",
+    //     isOnline: false
+    // })
 
     useEffect(() => {
         async function getData() {
 
             try {
-
                 const resp = await axios.get('http://localhost:5000/chatapp',
                     { withCredentials: true });
-
-                setUser(resp.data)
+                dispatch(userActionUpdate(resp.data))
             }
             catch (err) {
                 console.log(err)

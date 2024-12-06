@@ -37,4 +37,4 @@ const [userReducer, userActionUpdate] = [userSlice.reducer, userSlice.actions.up
 
 export { userReducer, userActionUpdate}
 
-export type {IS}
+export type {User}

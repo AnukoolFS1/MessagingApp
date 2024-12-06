@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { IS } from "./redux/userSlice";
 import { Outlet } from "react-router-dom";
+import { RootState } from "./redux/store";
 
 const App = () => {
-    const username = useSelector((state:IS) => state.user.name)
+    const username = useSelector((state:RootState) => state.users.user.name)
     
     return (
         <section>
