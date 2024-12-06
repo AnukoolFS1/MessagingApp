@@ -3,7 +3,7 @@ const { model, Schema } = require('mongoose');
 const conversationSchema = new Schema({
     message: { type: [{ type: Schema.Types.ObjectId, required: true }] },
     users: {
-        type: [{ type: string, required: true }],
+        type: [{ type: String, required: true }],
         validate: {
             validator: function (value) {
                 return value.length <= 2;
@@ -11,7 +11,7 @@ const conversationSchema = new Schema({
             message: "Users for a conversation can't be more than 2"
         }
     },
-    _users: { type: [{ type: string, required: true }] },
+    _users: { type: [{ type: String, required: true }] },
     timeStamp: { type: Date, default: Date.now },
 }, { timeStamp: true })
 
