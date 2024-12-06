@@ -2,13 +2,13 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const { registerUser, loginUser } = require('../controller/userHandler')
-const { initiateUser } = require('../controller/chatHandler')
+const { initiateUser, initiateMessage } = require('../controller/chatHandler')
 
 const uploads = multer({dest:"uploads/"})
 
 //chatapp
 router.get('/chatapp', initiateUser);
-router.post('/chatapp', )
+router.post('/chatapp', initiateMessage)
 
 // users handlings
 router.post('/register', uploads.single("file") ,registerUser)
