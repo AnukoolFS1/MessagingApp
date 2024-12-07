@@ -23,11 +23,13 @@ const initiateUser = async (req, res) => {
 }
 
 const initiateMessage = async (req, res) => {
-    try{const { receiver, sender, message, conversation } = req.body;
+    try{const { receiver, sender, message } = req.body;
 
     const receiversExistence = Users.exist({email: receiver})
 
-    if(!receiversExistence) res.status(400).json({errMsg: "receiver not found"})
+    if(!receiversExistence) res.status(400).json({errMsg: "receiver not found"});
+
+    const conversation = Conversation.find({users: [sender, receiver]})
 
     if (!conversation) {
         const conversation = new Conversation({
