@@ -57,7 +57,7 @@ const loginUser = async (req, res) => {
                     httpOnly: true,
                     // secure: false, // Use `true` if running on HTTPS
                     // sameSite: 'Lax', // Prevent CSRF
-                    maxAge:  60 * 60 * 1000 // 1 day in milliseconds
+                    maxAge:  60 * 60 * 1000 * 2 // 1 day in milliseconds
                 })
                 .json({ msg: 'login successful' });
         } else {

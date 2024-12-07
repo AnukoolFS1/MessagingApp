@@ -12,7 +12,7 @@ interface UserData {
     phone: string,
     email: string,
     password: string,
-    role: "Teacher" | "Student" | "Institute" | ""
+    role: "user" | "admin" | ""
 }
 
 
@@ -68,7 +68,7 @@ export default function Signup({ className }: Props) {
         setValue(e.target.value)
         handleUserInput(e)
     }
-    const role: string[] = ["--select role--", 'Teacher', "Student", "Institute"]
+    const role: string[] = ["--select role--", 'user', "admin"]
 
     return (
         <div>

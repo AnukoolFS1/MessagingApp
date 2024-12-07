@@ -1,7 +1,6 @@
 import './chat.css';
 import axios from 'axios';
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 type props = {
@@ -16,7 +15,10 @@ interface initMsg {
 
 const FirstChat = ({ active }: props) => {
     const email = useSelector((state: RootState) => state.users.user.email)
-    const [initiateMessage, setInitiateMessage] = useState<initMsg>({ receiver: "", sender: email, message: "Message" })
+
+    const [initiateMessage, setInitiateMessage] = useState<initMsg>({
+        receiver: "", sender: email, message: ""
+    })
 
     const style = {
         display: active ? "flex" : "none",
@@ -24,6 +26,7 @@ const FirstChat = ({ active }: props) => {
 
     const messageHandle = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInitiateMessage((prev): initMsg => {
+            console.log(prev)
             return { ...prev, message: event.target.value }
         })
     }
@@ -34,11 +37,12 @@ const FirstChat = ({ active }: props) => {
         })
     }
 
-    const onSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const onSubmit = async () => {
         try {
 
+            console.log(initiateMessage)
             const response = await axios.post('http://localhost:5000/chatapp', initiateMessage, {
-                headers:{
+                headers: {
                     "Content-Type": "application/json",
                     // "X-custom-user": "taquila"
                 }
@@ -46,10 +50,16 @@ const FirstChat = ({ active }: props) => {
 
             console.log(response.data)
         }
-        catch(err:any) {
+        catch (err: any) {
             console.log(err.response)
         }
+    }
+
+    useEffect(() => {
+        if (email) {
+            setInitiateMessage(prev => ({ ...prev, sender: email }));
         }
+    }, [email]);
     return (
         <div style={style} className="firstChat">
             <h2>sending by {email}</h2>
