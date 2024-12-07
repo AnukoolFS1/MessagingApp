@@ -14,7 +14,7 @@ const initiateUser = async (req, res) => {
     if (token) {
         const user = jwt.verify(token, sKey)
 
-        const conversation = await Conversation.find({ users: user.email })
+        const conversation = await Conversation.find({ users: user.email }, {_id: 0, message:0, _users:0,timeStamp:0, __v: 0})
 
         res.status(200).json({ user, conversation })
     } else {

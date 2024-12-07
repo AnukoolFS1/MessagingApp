@@ -4,7 +4,7 @@ const Chat = () => {
 
     return (
         <div>
-            <FirstChat active={true} />
+            <FirstChat active={false} />
             <div>
 
             </div>

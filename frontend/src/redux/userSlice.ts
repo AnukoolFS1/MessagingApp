@@ -34,7 +34,7 @@ const userSlice = createSlice({
     reducers: {
         updateUser: (state, action) => {
             state.user = action.payload.user;
-            state.conversations = action.payload.conversations;
+            state.conversations = action.payload.conversation;
             // state.messages = action.payload.messages
         }
     }
