@@ -1,4 +1,19 @@
 .dashboard{
     display: flex;
-    
+}
+
+.dashboard > div{
+    border: 1px solid white;
+    flex: 4;
+    height: 77vh;
+}
+
+.dashboard > .interlocutors{
+    flex: 1;
+    padding: 0;
+}
+
+.interlocutors ul{
+    margin: 0;
+    border: 1px solid green;
 }

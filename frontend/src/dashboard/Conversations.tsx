@@ -1,17 +1,15 @@
-// import { useState } from "react"
 
 
 const Conversations = ({conversation, email}:any) => {
-    // const [users, setUsers] = useState<string[]>([])
 
-    let users = conversation.map((e:any) =>{
+    let interlocutors = conversation.map((e:any) =>{
         return (e.users.filter((e:string) => e!==email))[0]
     })
     
     return (
-        <div>
+        <div className="interlocutors">
             <ul>
-                {users?.map((c:any) => {
+                {interlocutors?.map((c:any) => {
                     return (
                         <li key={c}>{c}</li>
                     )
