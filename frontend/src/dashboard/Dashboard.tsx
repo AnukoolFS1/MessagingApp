@@ -36,7 +36,7 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <section>
+        <section className="dashboard">
             <Conversations conversation={user.conversations} />
             <Chat />
         </section>
