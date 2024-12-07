@@ -26,7 +26,6 @@ const FirstChat = ({ active }: props) => {
 
     const messageHandle = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInitiateMessage((prev): initMsg => {
-            console.log(prev)
             return { ...prev, message: event.target.value }
         })
     }

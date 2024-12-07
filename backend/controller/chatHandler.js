@@ -1,7 +1,7 @@
 // chatHandler.js
-const Conversation = require('../model/conversation')
+const Conversation = require('../model/conversation');
 const Messages = require('../model/message');
-const Users = require('../model/users')
+const Users = require('../model/users');
 
 
 const jwt = require('jsonwebtoken');
@@ -23,22 +23,21 @@ const initiateUser = async (req, res) => {
 }
 
 const initiateMessage = async (req, res) => {
+    const { receiver, sender, message } = req.body;
+
+    if (!receiver || !sender || !message) res.status(400).json({ msg: "some fields are empty" })
     try {
-        const { receiver, sender, message } = req.body;
 
-        console.log(sender)
-        const senderId = await Users.findOne({email: sender}).select("_id")
-
-        console.log(senderId, "hjghjt")
+        const senderId = await Users.findOne({ email: sender }).select("_id")
 
         const receiversExistence = await Users.findOne({ email: receiver }).select("_id")
 
         if (!receiversExistence) res.status(400).json({ errMsg: "receiver not found" });
 
-        const conversation = await Conversation.find({ users: [sender, receiver] })
+        const conversation = await Conversation.find({ users: { $all: [sender, receiver] } })
 
-        let newConversation 
-        if (conversation === 0) {
+        let newConversation
+        if (conversation.length === 0) {
             newConversation = new Conversation({
                 users: [sender, receiver],
                 _users: [sender, receiver],
@@ -47,18 +46,18 @@ const initiateMessage = async (req, res) => {
         } else {
         }
 
-        console.log(newConversation)
         const newMessage = new Messages({
             message, sender: senderId, receiver: receiversExistence._id, conversationId: !conversation ? newConversation._id : conversation._id
         })
 
-        // await newMessage.save();
+        await newMessage.save();
 
-        if (conversation === 0) {
+        if (conversation.length === 0) {
             newConversation.message.push(newMessage._id)
             await newConversation.save()
+        } else {
+            await Conversation.findByIdAndUpdate({ _id: conversation[0]._id }, { $push: { message: newMessage._id } })
         }
-        // conversation.findByIdAndUpdate({_id:conversation}, {$set:{message:{$push: newMessage._id}}})
 
         res.status(201).json({ msg: message })
     }
