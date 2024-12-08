@@ -3,9 +3,9 @@
 }
 
 .dashboard > div{
-    border: 1px solid white;
+    /* border: 1px solid grey; */
     flex: 4;
-    height: 77vh;
+    height: 84.5vh;
 }
 
 .dashboard > .interlocutors{
@@ -15,5 +15,18 @@
 
 .interlocutors ul{
     margin: 0;
-    border: 1px solid green;
+    /* border: 1px solid green; */
+    list-style-type: none;
+}
+
+.interlocutors ul li{
+    padding: .8rem;
+    border-bottom: 1px solid grey;
+    text-align: right;
+    transition: .07s all linear;
+}
+
+.interlocutors ul li:hover{
+    transform: translate(.5px, -2px);
+    background-color: rgb(9, 149, 142);
 }

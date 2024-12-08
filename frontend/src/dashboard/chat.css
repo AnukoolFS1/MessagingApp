@@ -1,3 +1,30 @@
+.Chats {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid grey;
+}
+
+.chat {
+    flex: 1;
+    border-bottom: 1px solid grey;
+}
+
+.sendText{
+    display: flex;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.sendText input{
+    flex: 10;
+}
+
+.sendText button{
+    flex: 1;
+}
+
+
+
 .firstChat{
     padding: 2rem;
     flex-direction: column;

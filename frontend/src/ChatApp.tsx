@@ -7,7 +7,7 @@ const App = () => {
     
     return (
         <section>
-            <h1>{username || "The ChatApp"}</h1>
+            <h1 className="heading">{username || "The ChatApp"}</h1>
             <hr />
             <Outlet></Outlet>
         </section>

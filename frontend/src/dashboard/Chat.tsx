@@ -3,12 +3,12 @@ import FirstChat from "./FirstChatDialoge"
 const Chat = () => {
 
     return (
-        <div>
+        <div className="Chats">
             <FirstChat active={false} />
-            <div>
+            <div className="chat">
 
             </div>
-            <div>
+            <div className="sendText">
                 <input type="text" />
                 <button>send</button>
             </div>
