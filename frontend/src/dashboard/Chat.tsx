@@ -1,7 +1,8 @@
 import FirstChat from "./FirstChatDialoge"
-
+import { useSelector } from "react-redux"
+import { RootState } from "../redux/store"
 const Chat = () => {
-
+    // const messages = useSelector((state:RootState) => state.store.)
     return (
         <div className="Chats">
             <FirstChat active={false} />

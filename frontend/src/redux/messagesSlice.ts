@@ -11,8 +11,8 @@ const initialState: messages = {
     error: ""
 }
 
-export const fetchMessages = createAsyncThunk('messages/fetchMessages', () => {
-    return axios.get('http://localhost:5000/messages')
+export const fetchMessages = createAsyncThunk('messages/fetchMessages', async (email:string) => {
+    return axios.get(`http://localhost:5000/messages/${email}`,{ withCredentials: true})
     .then(result => {
         return result.data
     })
