@@ -1,12 +1,16 @@
+// import { AppDispatch } from "../redux/store"
 import FirstChat from "./FirstChatDialoge"
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/store"
+// import { useSelector,useDispatch } from "react-redux"
+// import { RootState } from "../redux/store";
+// import { fetchMessages } from "../redux/messagesSlice"
 import { useEffect } from "react"
-const Chat = () => {
+const Chat = ({email}:any) => {
     // const messages = useSelector((state:RootState) => state.store)
+    // const dispatch = useDispatch<AppDispatch>()
+    // dispatch(fetchMessages(email))
 
     useEffect(() => {
-        const eventSource = new EventSource('http://localhost:5000/chatappmessages');
+        const eventSource = new EventSource(`http://localhost:5000/messages/${email}`);
 
         eventSource.onmessage = (event) => {
 
