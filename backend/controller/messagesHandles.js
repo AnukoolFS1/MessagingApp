@@ -5,9 +5,16 @@ const Conversation = require('../model/conversation')
 const getMessages = async (req,res) => {
     const user = req.params.user
 
-    const converstation = await Conversation.find({users: user})
+    console.log(user)
+    const conversation = await Conversation.find({users: user})
 
-    console.log(converstation)
+    console.log(conversation)
+
+    const message = await Messages.find({_id:{$in:conversation.message}}).lean()
+
+    console.log(message)
+
+    res.end()
 
 }
 

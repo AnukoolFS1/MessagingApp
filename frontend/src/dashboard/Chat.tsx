@@ -11,7 +11,6 @@ const Chat = ({email}:any) => {
 
     useEffect(() => {
         const eventSource = new EventSource(`http://localhost:5000/messages/${email}`);
-
         eventSource.onmessage = (event) => {
 
             console.log(event.data)
@@ -22,12 +21,10 @@ const Chat = ({email}:any) => {
             console.log(error)
         }
 
-
         return () => {
             eventSource.close()
         }
     }, [])
-
 
     return (
         <div className="Chats">
