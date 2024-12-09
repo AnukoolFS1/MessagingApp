@@ -8,7 +8,9 @@ const uploads = multer({dest:"uploads/"})
 
 //chatapp
 router.get('/chatapp', initiateUser);
-router.post('/chatapp', initiateMessage)
+router.post('/chatapp', initiateMessage);
+
+router.get('/messages', )
 
 // users handlings
 router.post('/register', uploads.single("file") ,registerUser)
