@@ -1,28 +1,30 @@
-// import { AppDispatch } from "../redux/store"
+import { AppDispatch, RootState } from "../redux/store"
 import FirstChat from "./FirstChatDialoge"
-// import { useSelector,useDispatch } from "react-redux"
-// import { RootState } from "../redux/store";
+import { useSelector,useDispatch } from "react-redux"
 // import { fetchMessages } from "../redux/messagesSlice"
-import { useEffect } from "react"
+import { useEffect } from "react";
+import { updateMessages } from "../redux/messagesSlice";
 const Chat = ({email}:any) => {
-    // const messages = useSelector((state:RootState) => state.store)
-    // const dispatch = useDispatch<AppDispatch>()
-    // dispatch(fetchMessages(email))
+    const messages = useSelector((state:RootState) => state.messages)
+    const dispatch = useDispatch<AppDispatch>()
+    // dispatch()
 
+    console.log(messages)
     useEffect(() => {
+        console.log(email)
         const eventSource = new EventSource(`http://localhost:5000/messages/${email}`);
+        console.log(eventSource)
         eventSource.onmessage = (event) => {
-
-            console.log(event.data)
+            dispatch(updateMessages(JSON.parse(event.data)))
         }
         eventSource.onerror = (error) => {
-
             console.log(error)
         }
+        
         return () => {
             eventSource.close()
         }
-    }, [])
+    }, [email])
 
     return (
         <div className="Chats">

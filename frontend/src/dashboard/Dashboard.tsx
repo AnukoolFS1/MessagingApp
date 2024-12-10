@@ -29,7 +29,10 @@ const Dashboard = () => {
     return (
         <section className="dashboard">
             <Conversations conversation={user.conversations} email={user.user.email} />
-            <Chat email={user.user.email} />
+            {
+                user.user.email && <Chat email={user.user.email} />
+            }
+
         </section>
     )
 }

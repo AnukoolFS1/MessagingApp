@@ -17,17 +17,17 @@ const getMessages = async (req, res) => {
                 for (let conversation of conversations) {
                     const data = {};
                     
-                    data.party = conversation.users.filter(e => e !== user)
+                    data.party = conversation.users.filter(e => e !== user)[0]
                     data.messages = await Messages.find({ _id: { $in: conversation.message } }, { _id: 0, __v: 0, timeStamp: 0, createdAt: 0 }).lean()
                     
                     chats.push(data);
                 }
-                res.write(`data : ${JSON.stringify(chats)}\n\n`);
+                res.write(`data: ${JSON.stringify(chats)}\n\n`);
             }catch(err){
                 console.error(err);
-                res.write("error: error\ndata: Server encountered error\n\n")
+                res.write("event: error\ndata: Server encountered an error\n\n")
             }
-        }, 5000)
+        }, 50000)
 
         req.on("close", () => {
             console.log('client disconnected');

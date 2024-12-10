@@ -44,23 +44,12 @@ export default function Login({ className }: Props) {
             })
 
             const data = response.data
-            // const response = await fetch('http://localhost:5000/login', {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "X-custom-user": "taquila"
-            //     },
-            //     body:JSON.stringify(userData),
-            //     credentials: "include"
-            // })
-            // const data = await response.json()
             
             console.log(data)
 
             navigate('/chatapp/dashboard')
         }
         catch (err: any) {
-            // alert(err.response.data.msg)
             console.log(err)
         }
     }

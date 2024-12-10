@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 
 interface messages {
     messages: {party:string, messages: string[]}[],
@@ -11,27 +11,33 @@ const initialState: messages = {
     error: ""
 }
 
-export const fetchMessages = createAsyncThunk('messages/fetchMessages', async (email:string) => {
-    return axios.get(`http://localhost:5000/messages/${email}`,{ withCredentials: true})
-    .then(result => {
-        return result.data
-    })
-    .catch(() => {throw "something went wrong"})
-})
+// export const fetchMessages = createAsyncThunk('messages/fetchMessages', async (email:string) => {
+//     return axios.get(`http://localhost:5000/messages/${email}`,{ withCredentials: true})
+//     .then(result => {
+//         return result.data
+//     })
+//     .catch(() => {throw "something went wrong"})
+// })
 
 
 const messagesSlice = createSlice({
     name: "messages",
     initialState,
-    reducers:{},
-    extraReducers: (builder) => {
-        builder.addCase(fetchMessages.fulfilled, (state, action) => {
+    reducers:{
+        addMessages: (state, action) => {
             state.messages = action.payload
-        })
-        builder.addCase(fetchMessages.rejected, (state, action) => {
-            state.error = action.error.message
-        })
-    }
+        }
+    },
+    // extraReducers: (builder) => {
+    //     builder.addCase(fetchMessages.fulfilled, (state, action) => {
+    //         state.messages = action.payload
+    //     })
+    //     builder.addCase(fetchMessages.rejected, (state, action) => {
+    //         state.error = action.error.message
+    //     })
+    // }
 })
+
+export const updateMessages = messagesSlice.actions.addMessages
 
 export default messagesSlice.reducer
