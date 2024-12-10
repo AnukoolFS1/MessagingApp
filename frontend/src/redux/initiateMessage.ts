@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface initMsg {
+    receiver: string,
+    sender: string,
+    message: string,
+}
+
+const initialState: initMsg = {
     receiver: "", sender: "", message: ""
 }
 
