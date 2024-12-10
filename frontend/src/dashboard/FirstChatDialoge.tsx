@@ -21,9 +21,7 @@ const FirstChat = ({ active }: props) => {
     }
 
     const receiver = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInitiateMessage((prev): initMsg => {
-            return { ...prev, receiver: event.target.value }
-        })
+        dispatch(setReceiver(event.target.value))
     }
 
     const onSubmit = async () => {
@@ -44,7 +42,7 @@ const FirstChat = ({ active }: props) => {
 
     useEffect(() => {
         if (email) {
-            setInitiateMessage(prev => ({ ...prev, sender: email }));
+            dispatch(setSender(email))
         }
     }, [email]);
     return (
