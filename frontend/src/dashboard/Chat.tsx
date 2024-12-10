@@ -2,16 +2,13 @@ import { AppDispatch, RootState } from "../redux/store"
 import FirstChat from "./FirstChatDialoge"
 import { useSelector,useDispatch } from "react-redux"
 // import { fetchMessages } from "../redux/messagesSlice"
-import { useState,useEffect } from "react";
+import { useEffect } from "react";
 import { updateMessages } from "../redux/messagesSlice";
 const Chat = ({email}:any) => {
-    const messages = useSelector((state:RootState) => state.messages)
     const dispatch = useDispatch<AppDispatch>()
-    const [showConversation, setShowConversation] = useState([])
-    // dispatch()
-
+    const messages = useSelector((state:RootState) => state.messages.currentMessages)
+    console.log(messages)
     useEffect(() => {
-        console.log(email)
         const eventSource = new EventSource(`http://localhost:5000/messages/${email}`);
         console.log(eventSource)
         eventSource.onmessage = (event) => {
@@ -20,7 +17,6 @@ const Chat = ({email}:any) => {
         eventSource.onerror = (error) => {
             console.log(error)
         }
-
         return () => {
             eventSource.close()
         }
@@ -30,7 +26,7 @@ const Chat = ({email}:any) => {
         <div className="Chats">
             <FirstChat active={false} />
             <div className="chat">
-
+                {}
             </div>
             <div className="sendText">
                 <input type="text" />
