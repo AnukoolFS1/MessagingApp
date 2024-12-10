@@ -15,12 +15,10 @@ const Chat = ({email}:any) => {
 
             console.log(event.data)
         }
-
         eventSource.onerror = (error) => {
 
             console.log(error)
         }
-
         return () => {
             eventSource.close()
         }
