@@ -21,7 +21,6 @@ const messagesSlice = createSlice({
         },
         currentMessages: (state, action) => {
             state.messages.forEach((msg:{party:string, messages: string[]}) => {
-                console.log(msg.party,'----', action.payload)
                 if(msg.party === action.payload){
                     state.currentMessages = msg
                 }

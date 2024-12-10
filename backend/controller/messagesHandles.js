@@ -27,7 +27,7 @@ const getMessages = async (req, res) => {
                 console.error(err);
                 res.write("event: error\ndata: Server encountered an error\n\n")
             }
-        }, 50000)
+        }, 5000)
 
         req.on("close", () => {
             console.log('client disconnected');
