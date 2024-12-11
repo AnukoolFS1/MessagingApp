@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 
-const Chat = ({email, FDC}:any) => {
+const Chat = ({email, FDC, setFDC}:any) => {
     const dispatch = useDispatch<AppDispatch>()
     const messages = useSelector((state:RootState) => state.messages.currentMessages)
     const initiateMessage = useSelector((state:RootState) => state.intMessage)
@@ -27,7 +27,7 @@ const Chat = ({email, FDC}:any) => {
                 }
             });
 
-
+            setFDC(false)
             dispatch(setMessage(""))
         }
         catch (err: any) {

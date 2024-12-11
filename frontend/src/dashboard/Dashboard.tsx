@@ -40,7 +40,7 @@ const Dashboard = () => {
         <section className="dashboard">
             <Conversations conversation={user.conversations} email={user.user.email} setFDC={setFDC} />
             {
-                user.user.email && <Chat email={user.user.email} FDC={FDC} />
+                user.user.email && <Chat email={user.user.email} FDC={FDC} setFDC={setFDC} />
             }
 
         </section>
