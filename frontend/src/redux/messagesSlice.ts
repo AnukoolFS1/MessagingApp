@@ -30,6 +30,6 @@ const messagesSlice = createSlice({
 })
 
 export const updateMessages = messagesSlice.actions.addMessages
-export const setCurrentMsgs = messagesSlice.actions.currentMessages
+export const setCurrentMsg = messagesSlice.actions.currentMessages
 
 export default messagesSlice.reducer

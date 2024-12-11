@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
-import { setCurrentMsgs } from "../redux/messagesSlice";
+import { setCurrentMsg } from "../redux/messagesSlice";
+import { setReceiver } from "../redux/initiateMessage";
 
 const Conversations = ({conversation, email,setFDC}:any) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -9,7 +10,8 @@ const Conversations = ({conversation, email,setFDC}:any) => {
     })
     
     const setMessages = (email: string) => {
-        dispatch(setCurrentMsgs(email))
+        dispatch(setCurrentMsg(email))
+        dispatch(setReceiver(email))
     }
     return (
         <div className="interlocutors">

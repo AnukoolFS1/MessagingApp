@@ -5,6 +5,7 @@ const Users = require('../model/users');
 
 
 const jwt = require('jsonwebtoken');
+const { fetchMessages } = require('./fetchMessages');
 
 const sKey = process.env.JWT_SKey
 
@@ -25,7 +26,9 @@ const initiateUser = async (req, res) => {
 const initiateMessage = async (req, res) => {
     const { receiver, sender, message } = req.body;
 
-    if (!receiver || !sender || !message) res.status(400).json({ msg: "some fields are empty" })
+    if (!receiver || !sender || !message){ 
+        return res.status(400).json({ msg: "some fields are empty" })
+    }
     try {
 
         const senderId = await Users.findOne({ email: sender }).select("_id")
@@ -43,7 +46,6 @@ const initiateMessage = async (req, res) => {
                 _users: [sender, receiver],
             })
 
-        } else {
         }
 
         const newMessage = new Messages({
@@ -58,8 +60,8 @@ const initiateMessage = async (req, res) => {
         } else {
             await Conversation.findByIdAndUpdate({ _id: conversation[0]._id }, { $push: { message: newMessage._id } })
         }
-
-        res.status(201).json({ msg: message })
+        const chat = await fetchMessages(sender)
+        res.status(201).json(chat)
     }
     catch (err) {
         console.log(err);

@@ -4,7 +4,6 @@ const Messages = require('../model/message');
 async function fetchMessages(user) {
     try {
         const conversations = await Conversation.find({ users: user })
-
         const chats = []
         for (let conversation of conversations) {
             const data = {};
@@ -13,9 +12,8 @@ async function fetchMessages(user) {
             data.messages = await Messages.find({ _id: { $in: conversation.message } }, { _id: 0, __v: 0, timeStamp: 0, createdAt: 0 }).lean()
 
             chats.push(data);
-
-            return chats
         }
+        return chats
     }catch (err) {
         console.error("error occured while fetchMessages", err)
     }

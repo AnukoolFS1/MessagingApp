@@ -13,7 +13,7 @@ const getMessages = async (req, res) => {
             try{
                 // const conversations = await Conversation.find({ users: user })
                 
-                const chats = fetchMessages()
+                const chats = await fetchMessages(user)
                 // for (let conversation of conversations) {
                 //     const data = {};
                     

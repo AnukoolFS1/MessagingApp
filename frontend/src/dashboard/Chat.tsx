@@ -2,7 +2,7 @@ import { AppDispatch, RootState } from "../redux/store"
 import FirstChat from "./FirstChatDialoge"
 import { useSelector,useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { updateMessages } from "../redux/messagesSlice";
+import { setCurrentMsg, updateMessages } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
 import { setMessage, initMsg } from "../redux/initiateMessage";
 import axios from 'axios';
@@ -18,15 +18,16 @@ const Chat = ({email, FDC, setFDC}:any) => {
         dispatch(setMessage(e.target.value))
     }
 
-    const onSubmit = async (initiateMessage:initMsg) => {
+    const onSubmit = async (intMsg:initMsg) => {
         try {
-            const response = await axios.post('http://localhost:5000/chatapp', initiateMessage, {
+            const response = await axios.post('http://localhost:5000/chatapp', intMsg, {
                 headers: {
                     "Content-Type": "application/json",
                     // "X-custom-user": "taquila"
                 }
             });
-
+            dispatch(updateMessages(response.data))
+            dispatch(setCurrentMsg(intMsg.receiver))
             setFDC(false)
             dispatch(setMessage(""))
         }
