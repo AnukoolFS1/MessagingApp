@@ -1,6 +1,6 @@
 const Messages = require('../model/message')
 const Conversation = require('../model/conversation')
-
+const {fetchMessages} = require('./fetchMessages');
 
 const getMessages = async (req, res) => {
     const user = req.params.user
@@ -11,17 +11,17 @@ const getMessages = async (req, res) => {
 
         let Interval = setInterval(async () => {
             try{
-                const conversations = await Conversation.find({ users: user })
+                // const conversations = await Conversation.find({ users: user })
                 
-                const chats = []
-                for (let conversation of conversations) {
-                    const data = {};
+                const chats = fetchMessages()
+                // for (let conversation of conversations) {
+                //     const data = {};
                     
-                    data.party = conversation.users.filter(e => e !== user)[0]
-                    data.messages = await Messages.find({ _id: { $in: conversation.message } }, { _id: 0, __v: 0, timeStamp: 0, createdAt: 0 }).lean()
+                //     data.party = conversation.users.filter(e => e !== user)[0]
+                //     data.messages = await Messages.find({ _id: { $in: conversation.message } }, { _id: 0, __v: 0, timeStamp: 0, createdAt: 0 }).lean()
                     
-                    chats.push(data);
-                }
+                //     chats.push(data);
+                // }
                 res.write(`data: ${JSON.stringify(chats)}\n\n`);
             }catch(err){
                 console.error(err);
