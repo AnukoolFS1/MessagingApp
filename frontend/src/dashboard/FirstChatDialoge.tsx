@@ -1,14 +1,14 @@
 import './chat.css';
-import axios from 'axios';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { setSender, setMessage, setReceiver } from '../redux/initiateMessage';
+import { setSender, setMessage, setReceiver, initMsg } from '../redux/initiateMessage';
 type props = {
-    active: boolean
+    active: boolean,
+    onSubmit: (initiateMessage:initMsg) => {}
 }
 
-const FirstChat = ({ active }: props) => {
+const FirstChat = ({ active, onSubmit }: props) => {
     const email = useSelector((state: RootState) => state.users.user.email);
     const initiateMessage = useSelector((state:RootState) => state.intMessage) 
     const dispatch = useDispatch()
@@ -24,21 +24,7 @@ const FirstChat = ({ active }: props) => {
         dispatch(setReceiver(event.target.value))
     }
 
-    const onSubmit = async () => {
-        try {
-            const response = await axios.post('http://localhost:5000/chatapp', initiateMessage, {
-                headers: {
-                    "Content-Type": "application/json",
-                    // "X-custom-user": "taquila"
-                }
-            });
-
-            console.log(response.data)
-        }
-        catch (err: any) {
-            console.log(err.response)
-        }
-    }
+    
 
     useEffect(() => {
         if (email) {
@@ -50,7 +36,7 @@ const FirstChat = ({ active }: props) => {
             <h2>sending by {email}</h2>
             <input type="text" placeholder="Enter Receivers email" onChange={receiver} />
             <textarea rows={5} onChange={messageHandle} placeholder='Message'></textarea>
-            <button onClick={onSubmit}>send</button>
+            <button onClick={()=>onSubmit(initiateMessage)}>send</button>
         </div>
     )
 }

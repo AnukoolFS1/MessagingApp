@@ -28,4 +28,6 @@ const initiateMsgSlice = createSlice({
 
 export const { setSender, setReceiver, setMessage } = initiateMsgSlice.actions
 
+export type {initMsg}
+
 export default initiateMsgSlice.reducer

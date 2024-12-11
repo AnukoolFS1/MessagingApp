@@ -4,15 +4,39 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { updateMessages } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
+import { setMessage, initMsg } from "../redux/initiateMessage";
+import axios from 'axios';
 
 
-const Chat = ({email}:any) => {
+
+const Chat = ({email, FDC}:any) => {
     const dispatch = useDispatch<AppDispatch>()
     const messages = useSelector((state:RootState) => state.messages.currentMessages)
-    console.log(messages)
+    const initiateMessage = useSelector((state:RootState) => state.intMessage)
+
+    const typeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setMessage(e.target.value))
+    }
+
+    const onSubmit = async (initiateMessage:initMsg) => {
+        try {
+            const response = await axios.post('http://localhost:5000/chatapp', initiateMessage, {
+                headers: {
+                    "Content-Type": "application/json",
+                    // "X-custom-user": "taquila"
+                }
+            });
+
+
+            dispatch(setMessage(""))
+        }
+        catch (err: any) {
+            console.log(err.response)
+        }
+    }
+
     useEffect(() => {
         const eventSource = new EventSource(`http://localhost:5000/messages/${email}`);
-        console.log(eventSource)
         eventSource.onmessage = (event) => {
             dispatch(updateMessages(JSON.parse(event.data)))
         }
@@ -26,15 +50,15 @@ const Chat = ({email}:any) => {
 
     return (
         <div className="Chats">
-            <FirstChat active={false} />
+            <FirstChat active={FDC} onSubmit={onSubmit}/>
             <div className="chat">
                 {messages.messages?.map((msg: any) => {
                     return (<MsgUi msg={msg} key={msg.updatedAt} cUser={email}/>)
                 })}
             </div>
             <div className="sendText">
-                <input type="text" />
-                <button>send</button>
+                <input type="text" onChange={typeMessage} value={initiateMessage.message} />
+                <button onClick={() => onSubmit(initiateMessage)}>send</button>
             </div>
         </div>
     )
