@@ -1,24 +1,25 @@
 import { AppDispatch, RootState } from "../redux/store"
 import FirstChat from "./FirstChatDialoge"
-import { useSelector,useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useRef } from "react";
 import { setCurrentMsg, updateMessages } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
 import { setMessage, initMsg } from "../redux/initiateMessage";
 import axios from 'axios';
 
 
-
-const Chat = ({email, FDC, setFDC}:any) => {
+const Chat = ({ email, FDC, setFDC }: any) => {
     const dispatch = useDispatch<AppDispatch>()
-    const messages = useSelector((state:RootState) => state.messages.currentMessages)
-    const initiateMessage = useSelector((state:RootState) => state.intMessage)
+    const messages = useSelector((state: RootState) => state.messages.currentMessages)
+    const initiateMessage = useSelector((state: RootState) => state.intMessage)
+
+    const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const typeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setMessage(e.target.value))
     }
 
-    const onSubmit = async (intMsg:initMsg) => {
+    const onSubmit = async (intMsg: initMsg) => {
         try {
             const response = await axios.post('http://localhost:5000/chatapp', intMsg, {
                 headers: {
@@ -40,6 +41,8 @@ const Chat = ({email, FDC, setFDC}:any) => {
         const eventSource = new EventSource(`http://localhost:5000/messages/${email}`);
         eventSource.onmessage = (event) => {
             dispatch(updateMessages(JSON.parse(event.data)))
+            console.log(initiateMessage.receiver)
+            dispatch(setCurrentMsg(initiateMessage.receiver))
         }
         eventSource.onerror = (error) => {
             console.log(error)
@@ -49,12 +52,18 @@ const Chat = ({email, FDC, setFDC}:any) => {
         }
     }, [email])
 
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
+
     return (
         <div className="Chats">
-            <FirstChat active={FDC} onSubmit={onSubmit}/>
-            <div className="chat">
+            <FirstChat active={FDC} onSubmit={onSubmit} />
+            <div className="chat" ref={chatContainerRef}>
                 {messages.messages?.map((msg: any) => {
-                    return (<MsgUi msg={msg} key={msg.updatedAt} cUser={email}/>)
+                    return (<MsgUi msg={msg} key={msg.updatedAt} cUser={email} />)
                 })}
             </div>
             <div className="sendText">
