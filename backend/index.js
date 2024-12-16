@@ -6,6 +6,7 @@ const connectDB = require('./db/db.js'); // requiring the database
 const router = require('./route/routes.js')
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
+const http = require('node:http')
 
 
 //defining port
