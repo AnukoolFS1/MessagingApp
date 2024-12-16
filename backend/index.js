@@ -26,16 +26,9 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-custom-user")
     res.setHeader('Access-Control-Allow-Credentials', 'true')
 
-    // const setting = req.get("X-custom-user")
-
-    // if (setting !== "taquila") {
-    //     next()
-    // }
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-
-
 
     // cors({
     //     origin: 'http://localhost:5173', // Your frontend URL
@@ -45,8 +38,6 @@ app.use((req, res, next) => {
     // })
     next()
 })
-// app.use(express.urlencoded({extended: true}))
-
 
 // routers
 app.use('/', router)
