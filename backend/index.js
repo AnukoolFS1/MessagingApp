@@ -7,6 +7,7 @@ const router = require('./route/routes.js')
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const http = require('node:http')
+const ws = require('ws')
 
 
 //defining port
@@ -40,7 +41,22 @@ app.use((req, res, next) => {
 
 // routers
 app.use('/', router)
-
-
 // setup for the listen
-app.listen(PORT, () => console.log(`server has initiated at port ${PORT}`))
+const server = http.createServer(app)
+
+const wss = new ws.Server({server});
+
+wss.on("connection", (ws) =>{
+    ws.on("message", (message) =>{
+        console.log(message)
+    })
+
+    ws.on("close", () => {
+        console.log("connection close")
+    })
+})
+
+server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`)
+    console.log(`Websocket server is running on ws://localhost:${PORT}`)
+})
