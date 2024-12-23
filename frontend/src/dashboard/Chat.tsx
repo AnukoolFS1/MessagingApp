@@ -5,13 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { setCurrentMsg, updateMessages } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
 import { setMessage, initMsg } from "../redux/initiateMessage";
-import axios from 'axios';
+// import axios from 'axios';
 
 
 const Chat = ({ email, FDC, setFDC }: any) => {
     const [wsState, setWsState] = useState<number>(0)
     const dispatch = useDispatch<AppDispatch>()
     const messages = useSelector((state: RootState) => state.messages.currentMessages)
+    const allmessages = useSelector((state: RootState) => state.messages.messages)
     const initiateMessage = useSelector((state: RootState) => state.intMessage)
     const user = useSelector((state:RootState) => state.users.user)
     const [ws, setWs] = useState<WebSocket | null>(null)
@@ -26,18 +27,9 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     }
 
     function setMessages() {
+        console.log(initiateMessage.receiver)
         dispatch(setCurrentMsg(initiateMessage.receiver))
     }
-
-    useEffect(() => {
-        async function getMessages(){
-            const response = await axios.get(`http://localhost:5000/messages/${user.email}`)
-            console.log(response.data)
-            dispatch(updateMessages(response.data))
-        }
-
-        getMessages()
-    }, []);
 
     useEffect(() => {
         if (chatContainerRef.current) {
@@ -48,14 +40,16 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:5000/')
 
+        socket.onopen = () => {
+            socket.send(JSON.stringify({event:"first_connect", payload: user}))
+        }
+
         socket.onmessage = (event: MessageEvent) => {
             const response = JSON.parse(event.data)
-            console.log(response)
-            if (response.errMsg) { alert(response.errMsg) }
+            if (response.errMsg) { 
+                alert(response.errMsg) }
             else {
                 dispatch(updateMessages(response))
-                console.log("r")
-                setMessages()
             }
         }
 
@@ -73,7 +67,9 @@ const Chat = ({ email, FDC, setFDC }: any) => {
             socket.close()
         }
     }, [wsState])
-
+    useEffect(() =>{
+        setMessages()
+    }, [allmessages])
 
     const onSubmit = async (intMsg: initMsg) => {
         try {

@@ -24,7 +24,8 @@ const initiateUser = async (req, res) => {
 }
 
 const initiateMessage = async (chat) => {
-    const { receiver, sender, message } = JSON.parse(chat);
+    console.log(chat)
+    const { receiver, sender, message } = chat
     if (!receiver || !sender || !message){ 
         return { errMsg: "some fields are empty" }
     }
