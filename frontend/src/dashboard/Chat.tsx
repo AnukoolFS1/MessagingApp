@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { setCurrentMsg, updateMessages } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
 import { setMessage, initMsg } from "../redux/initiateMessage";
-import axios from 'axios';
+// import axios from 'axios';
 
 
 const Chat = ({ email, FDC, setFDC }: any) => {
