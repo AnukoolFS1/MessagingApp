@@ -45,16 +45,8 @@ app.use('/', router)
 const server = http.createServer(app)
 
 const wss = new ws.Server({server});
-
-wss.on("connection", (ws) =>{
-    ws.on("message", (message) =>{
-        console.log(message)
-    })
-
-    ws.on("close", () => {
-        console.log("connection close")
-    })
-})
+module.exports = wss
+const wsss = require("./controller/handleWss.js");
 
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
