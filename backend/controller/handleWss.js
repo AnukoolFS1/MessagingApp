@@ -1,12 +1,10 @@
 const wss = require("../index")
-const Conversation = require('../model/conversation');
 const { initiateMessage } = require('./chatHandler')
 const { fetchMessages } = require("./fetchMessages")
 
 const userConnections = new Map();
 
 wss.on("connection", (ws) => {
-    // ws.send(JSON.stringify(fetchMessages()))
 
     ws.on("message", async (message) => {
         const data = JSON.parse(message)
