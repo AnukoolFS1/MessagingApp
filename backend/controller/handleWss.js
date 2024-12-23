@@ -2,6 +2,7 @@ const wss = require("../index")
 const { initiateMessage } = require('./chatHandler')
 const { fetchMessages } = require("./fetchMessages")
 
+// save user logins
 const userConnections = new Map();
 
 wss.on("connection", (ws) => {
