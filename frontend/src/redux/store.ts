@@ -7,7 +7,7 @@ const store = configureStore({
     reducer:{
         users: userReducer,
         messages: messagesReducers,
-        intMessage: intMsgReducer
+        intMessage: intMsgReducer,
     }
 })
 

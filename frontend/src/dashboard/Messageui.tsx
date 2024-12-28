@@ -9,8 +9,8 @@ const MsgUi = ({ msg }: any) => {
     return (
         <div style={{ alignSelf: setAlign ? "end" : "start" }} className="msgui">
             <p>{msg.message}</p>
-            <sub>{msg.updatedAt.replace("T", " at ").split(".")[0]}</sub>
-            <div>{msg.status}</div>
+            <sub>{msg.updatedAt.split(/[T.]/)[1].slice(0,-3)}</sub>
+            <div style={{ display: setAlign ? "block" : "none" }}>{msg.status}</div>
         </div>
     )
 }

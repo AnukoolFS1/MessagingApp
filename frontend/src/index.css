@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #074799;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -53,20 +53,6 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-.login, .signup{
-  display: flex;
-  gap: 2rem;
-}
-
-.signup{
-  width: 50%;
-  flex-wrap: wrap;
-}
-
-.login{
-  flex-direction: column;
 }
 
 .login button, .signup button{
@@ -120,6 +106,15 @@ button:focus-visible {
 
 .input > input:valid + label {
   display: none;
+}
+
+.heading{
+  display: flex;
+  justify-content: space-between;
+}
+
+.logout{
+  font-size: 1rem;
 }
 
 @media (prefers-color-scheme: light) {

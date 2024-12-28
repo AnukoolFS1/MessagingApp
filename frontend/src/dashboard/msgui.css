@@ -1,9 +1,17 @@
+.chat {
+    display: flex;
+    gap: .8rem
+}
+
 .msgui {
     border: 1px solid grey;
+    width: 15rem;
     padding: 1.5rem;
     border-radius: 4px;
+    background-color: #009990;
+    box-shadow: 2px 2px 8px black;
 }
 
 .msgui sub {
-    font-style: italic;
+    color: lime;
 }

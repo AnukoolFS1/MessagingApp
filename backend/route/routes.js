@@ -16,7 +16,12 @@ router.get('/messages/:user', getMessages)
 
 // users handlings
 router.post('/register', uploads.single("file") ,registerUser)
-router.post('/login', loginUser)
+router.post('/login', loginUser);
+router.get("/logout", (req, res) => {
+
+    res.clearCookie('token', { httpOnly: true, path: '/' });
+    res.status(200).json({msg:"logout"})
+})
 
 
 

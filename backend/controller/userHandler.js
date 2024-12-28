@@ -55,6 +55,7 @@ const loginUser = async (req, res) => {
             return res.status(200)
                 .cookie('token', token, {
                     httpOnly: true,
+                    path:"/",
                     // secure: false, // Use `true` if running on HTTPS
                     // sameSite: 'Lax', // Prevent CSRF
                     maxAge:  60 * 60 * 1000 * 2 // 1 day in milliseconds
@@ -73,7 +74,17 @@ const loginUser = async (req, res) => {
 
 }
 
+const statusOn = async (user) => {
+    await users.updateOne({email:user}, {$set:{isOnline:true}})
+}
+
+const statusOff = async (user) => {
+    await users.updateOne({email:user}, {$set:{isOnline:false}})
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    statusOn,
+    statusOff
 }

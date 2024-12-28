@@ -2,6 +2,7 @@ import { useState } from "react";
 import Input from "./Input";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import "../css/login.css"
 
 type Props = {
     className: string

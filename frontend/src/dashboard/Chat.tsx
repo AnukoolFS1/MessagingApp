@@ -15,7 +15,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     const allmessages = useSelector((state: RootState) => state.messages.messages)
     const initiateMessage = useSelector((state: RootState) => state.intMessage)
     const user = useSelector((state:RootState) => state.users.user)
-    const [ws, setWs] = useState<WebSocket | null>(null)
+    const [ws, setWs] = useState<WebSocket | null>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const typeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +27,6 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     }
 
     function setMessages() {
-        console.log(initiateMessage.receiver)
         dispatch(setCurrentMsg(initiateMessage.receiver))
     }
 
@@ -62,7 +61,6 @@ const Chat = ({ email, FDC, setFDC }: any) => {
         }
 
         setWs(socket)
-
         return () => {
             socket.close()
         }
