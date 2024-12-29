@@ -42,6 +42,6 @@ const userSlice = createSlice({
 
 const [userReducer, userActionUpdate] = [userSlice.reducer, userSlice.actions.updateUser];
 
-export { userReducer, userActionUpdate}
+export { userReducer, userActionUpdate, initialState}
 
 export type {User}

@@ -1,21 +1,20 @@
 import { AppDispatch, RootState } from "../redux/store"
 import FirstChat from "./FirstChatDialoge";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useRef, useState } from "react";
-import { setCurrentMsg, updateMessages } from "../redux/messagesSlice";
+import { useEffect, useRef} from "react";
+import { setCurrentMsg } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
 import { setMessage, initMsg } from "../redux/initiateMessage";
+import Context from "../Context/Context";
 // import axios from 'axios';
 
 
 const Chat = ({ email, FDC, setFDC }: any) => {
-    const [wsState, setWsState] = useState<number>(0)
+    const {setWsState, socket} = Context()
     const dispatch = useDispatch<AppDispatch>()
     const messages = useSelector((state: RootState) => state.messages.currentMessages)
     const allmessages = useSelector((state: RootState) => state.messages.messages)
     const initiateMessage = useSelector((state: RootState) => state.intMessage)
-    const user = useSelector((state:RootState) => state.users.user)
-    const [ws, setWs] = useState<WebSocket | null>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const typeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +22,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     }
 
     const focusInput = () => { //e: React.FocusEvent<HTMLInputElement>
-        if (ws?.readyState === 3) setWsState(Math.random())
+        if (socket?.readyState === 3) setWsState(Math.random())
     }
 
     function setMessages() {
@@ -36,42 +35,14 @@ const Chat = ({ email, FDC, setFDC }: any) => {
         }
     }, [messages]);
 
-    useEffect(() => {
-        const socket = new WebSocket('ws://localhost:5000/')
 
-        socket.onopen = () => {
-            socket.send(JSON.stringify({event:"first_connect", payload: user}))
-        }
-
-        socket.onmessage = (event: MessageEvent) => {
-            const response = JSON.parse(event.data)
-            if (response.errMsg) { 
-                alert(response.errMsg) }
-            else {
-                dispatch(updateMessages(response))
-            }
-        }
-
-        socket.onerror = (error) => {
-            console.error(error)
-        }
-
-        socket.onclose = () => {
-            console.log(`ws server has closed`)
-        }
-
-        setWs(socket)
-        return () => {
-            socket.close()
-        }
-    }, [wsState])
     useEffect(() =>{
         setMessages()
     }, [allmessages])
 
     const onSubmit = async (intMsg: initMsg) => {
         try {
-            ws?.send(JSON.stringify(intMsg))
+            socket?.send(JSON.stringify(intMsg))
             setFDC(false)
             dispatch(setMessage(""))
         }
