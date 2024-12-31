@@ -25,7 +25,6 @@ const initialState: IS = {
         isOnline: false
     },
     conversations :[],
-    // messages: []
 }
 
 const userSlice = createSlice({
@@ -34,8 +33,7 @@ const userSlice = createSlice({
     reducers: {
         updateUser: (state, action) => {
             state.user = action.payload.user;
-            state.conversations = action.payload.conversation;
-            // state.messages = action.payload.messages
+            state.conversations = action.payload.conversations;
         }
     }
 })

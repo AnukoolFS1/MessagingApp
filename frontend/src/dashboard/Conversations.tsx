@@ -3,9 +3,10 @@ import { AppDispatch } from "../redux/store";
 import { setCurrentMsg } from "../redux/messagesSlice";
 import { setReceiver } from "../redux/initiateMessage";
 
-const Conversations = ({conversation, email,setFDC}:any) => {
+const Conversations = ({conversations, email,setFDC}:any) => {
     const dispatch = useDispatch<AppDispatch>();
-    let interlocutors = conversation.map((e:any) =>{
+    console.log(conversations)
+    let interlocutors = conversations.map((e:any) =>{
         return (e.users.filter((e:string) => e!==email))[0]
     })
     

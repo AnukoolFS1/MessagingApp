@@ -35,10 +35,11 @@ const Dashboard = () => {
         return () => window.removeEventListener("keydown", CloseChatDialoge)
     }, [])
 
+
     return (
 
             <section className="dashboard">
-                <Conversations conversation={user.conversations} email={user.user.email} setFDC={setFDC} />
+                <Conversations conversations={user.conversations} email={user.user.email} setFDC={setFDC} />
                 {
                     user.user.email && <Chat email={user.user.email} FDC={FDC} setFDC={setFDC} />
                 }

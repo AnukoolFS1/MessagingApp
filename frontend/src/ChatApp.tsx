@@ -8,15 +8,17 @@ import { initialState, userActionUpdate } from "./redux/userSlice";
 
 const App = () => {
     const username = useSelector((state:RootState) => state.users.user.name)
+    const user = useSelector((state:RootState) => state.users)
     const {socket} = Context();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    console.log(initialState)
     function logout(){
         axios.get("http://localhost:5000/logout", {withCredentials:true})
-        console.log(socket)
         socket?.close()
         dispatch(userActionUpdate(initialState))
+        console.log(user)
         navigate("/")
     }
     return (
