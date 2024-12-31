@@ -9,8 +9,7 @@ const Provider = ({ children }:any) => {
     const dispatch = useDispatch<AppDispatch>()
     const user = useSelector((state:RootState) => state.users.user)
     const [wsState, setWsState] = useState<number>(0)
-
-
+    
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:5000/')
 
