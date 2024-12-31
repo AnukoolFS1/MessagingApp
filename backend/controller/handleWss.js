@@ -11,7 +11,6 @@ wss.on("connection", (ws) => {
     ws.on("message", async (message) => {
         const data = JSON.parse(message)
 
-        console.log(data)
         if (data.event) {
             const userEmail = data.payload.email
             await statusOn(userEmail)

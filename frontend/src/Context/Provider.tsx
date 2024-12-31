@@ -35,7 +35,6 @@ const Provider = ({ children }:any) => {
         }
 
         setWs(socket)
-        console.log('socket connected')
         return () => {
             socket.close()
         }

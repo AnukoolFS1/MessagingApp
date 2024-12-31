@@ -5,7 +5,6 @@ import { setReceiver } from "../redux/initiateMessage";
 
 const Conversations = ({conversations, email,setFDC}:any) => {
     const dispatch = useDispatch<AppDispatch>();
-    console.log(conversations)
     let interlocutors = conversations.map((e:any) =>{
         return (e.users.filter((e:string) => e!==email))[0]
     })

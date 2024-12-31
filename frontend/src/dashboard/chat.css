@@ -12,23 +12,21 @@
     overflow-y: scroll;
 }
 
-.sendText{
+.sendText {
     display: flex;
     width: 98%;
     margin: 0 auto;
 }
 
-.sendText input{
+.sendText input {
     flex: 10;
 }
 
-.sendText button{
+.sendText button {
     flex: 1;
 }
 
-
-
-.firstChat{
+.firstChat {
     padding: 2rem;
     flex-direction: column;
     position: fixed;
@@ -40,14 +38,14 @@
     animation: comein .3s linear 1 forwards;
 }
 
-.firstChat input{
+.firstChat input {
     width: 20vw;
     height: 10vh;
     font-size: 1.5rem;
     font-family: system-ui;
 }
 
-.firstChat textarea{
+.firstChat textarea {
     font-size: 1.2rem;
     width: 40vw;
     font-family: system-ui;
@@ -55,11 +53,12 @@
 }
 
 @keyframes comein {
-    from{
+    from {
         opacity: .3;
         transform: translateY(30px);
     }
-    to{
+
+    to {
         opacity: 1;
         transform: translateY(0px);
     }
