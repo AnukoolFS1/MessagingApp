@@ -16,6 +16,13 @@ const initiateUser = async (req, res) => {
         const user = jwt.verify(token, sKey)
 
         const conversations = await Conversation.find({ users: user.email }, {_id: 0, message:0, _users:0,timeStamp:0, __v: 0}).lean()
+        console.log(conversations)
+        let activeUser = conversations.map(e => {
+            return e.users.filter(e => e!==user.email)[0]
+        })
+
+        activeUser = await Users.find({email:{$in: activeUser}}).select('email')
+        console.log(activeUser[0])
 
         res.status(200).json({ user, conversations })
     } else {
