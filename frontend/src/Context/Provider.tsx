@@ -9,7 +9,7 @@ const Provider = ({ children }:any) => {
     const [ws, setWs] = useState<WebSocket | null>(null)
     const dispatch = useDispatch<AppDispatch>()
     const user = useSelector((state:RootState) => state.users.user);
-    const activeUser = useSelector((state:RootState) => state.users.activeUsers)
+    // const activeUser = useSelector((state:RootState) => state.users.activeUsers)
     const [wsState, setWsState] = useState<number>(0)
     
     useEffect(() => {
@@ -32,7 +32,6 @@ const Provider = ({ children }:any) => {
                     break;
 
                 case 0:
-                    console.log(response.user)
                     dispatch(removeActive(response.user));
                     break;
                 case 1:
@@ -56,7 +55,7 @@ const Provider = ({ children }:any) => {
         return () => {
             socket.close()
         }
-    }, [wsState, user, activeUser])
+    }, [wsState, user])
 
     return (<store.Provider value={{socket:ws, setWsState}}>
         {children}

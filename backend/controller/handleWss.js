@@ -6,6 +6,17 @@ const {statusOff, statusOn} = require("./userHandler")
 // save user logins
 const userConnections = new Map();
 
+async function sendUserStat(user,status){
+    const {activeUsers} = await checkOnline(user)
+    const payload = JSON.stringify({status, user})
+    for(let users of activeUsers){
+        const receipentWs = userConnections.get(users);
+        if(receipentWs && (receipentWs.readyState === WebSocket.OPEN)){
+            receipentWs.send(payload)
+        }
+    }
+}
+
 wss.on("connection", (ws) => {
 
     ws.on("message", async (message) => {
@@ -16,6 +27,7 @@ wss.on("connection", (ws) => {
             await statusOn(userEmail)
             userConnections.set(userEmail, ws);
             const retrieveMessages = JSON.stringify(await fetchMessages(userEmail))
+            await sendUserStat(userEmail, 1)
             ws.send(retrieveMessages)
         }
         else {
@@ -32,7 +44,7 @@ wss.on("connection", (ws) => {
     ws.on("close", async () => {
         for(let [user,connection] of userConnections){
             if(connection === ws) {
-                statusOff(user); console.log(user);
+                await statusOff(user); console.log(user);
                 userConnections.delete(user)
 
                 const {activeUsers} = await checkOnline(user)

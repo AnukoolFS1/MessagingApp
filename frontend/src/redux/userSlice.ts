@@ -39,13 +39,10 @@ const userSlice = createSlice({
             state.activeUsers = action.payload.activeUsers
         },
         addActive: (state, action) => {
-            state.activeUsers.push(action.payload)
-            state.activeUsers = state.activeUsers
+            state.activeUsers = [...state.activeUsers, action.payload]
         },
         removeActive: (state, action) => {
-            state.activeUsers = state.activeUsers.filter((e:string) => {
-                return e!==action.payload
-            })
+            state.activeUsers = state.activeUsers.filter((e:string) => e!==action.payload)
         }
     }
 })
