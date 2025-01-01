@@ -1,6 +1,6 @@
 const wss = require("../index")
 const { initiateMessage } = require('./chatHandler')
-const { fetchMessages } = require("./fetchMessages")
+const { fetchMessages, checkOnline } = require("./fetchMessages")
 const {statusOff, statusOn} = require("./userHandler")
 
 // save user logins
@@ -29,11 +29,19 @@ wss.on("connection", (ws) => {
         }
     })
 
-    ws.on("close", () => {
+    ws.on("close", async () => {
         for(let [user,connection] of userConnections){
             if(connection === ws) {
                 statusOff(user); console.log(user);
                 userConnections.delete(user)
+
+                const {activeUsers} = await checkOnline(user)
+                for(let users of activeUsers){
+                    const receipentWs = userConnections.get(users);
+                    if(receipentWs && (receipentWs.readyState === WebSocket.OPEN)){
+                        receipentWs.send(JSON.stringify({status: 0, user}))
+                    }
+                }
                 break;
             }
         }

@@ -1,13 +1,15 @@
 import { useEffect,useState } from "react"
 import { updateMessages } from "../redux/messagesSlice"
 import { AppDispatch, RootState } from "../redux/store"
+import { addActive, removeActive } from "../redux/userSlice"
 import store from "./store"
 import { useDispatch,useSelector } from "react-redux"
 
 const Provider = ({ children }:any) => {
     const [ws, setWs] = useState<WebSocket | null>(null)
     const dispatch = useDispatch<AppDispatch>()
-    const user = useSelector((state:RootState) => state.users.user)
+    const user = useSelector((state:RootState) => state.users.user);
+    const activeUser = useSelector((state:RootState) => state.users.activeUsers)
     const [wsState, setWsState] = useState<number>(0)
     
     useEffect(() => {
@@ -19,10 +21,26 @@ const Provider = ({ children }:any) => {
 
         socket.onmessage = (event: MessageEvent) => {
             const response = JSON.parse(event.data)
-            if (response.errMsg) { 
-                alert(response.errMsg) }
-            else {
-                dispatch(updateMessages(response))
+            // if (response.errMsg) { 
+            //     alert(response.errMsg) }
+            // else {
+            //     dispatch(updateMessages(response))
+            // }
+            switch(response.status){
+                case 400:
+                    alert(response.errMsg);
+                    break;
+
+                case 0:
+                    console.log(response.user)
+                    dispatch(removeActive(response.user));
+                    break;
+                case 1:
+                    dispatch(addActive(response.user));
+                    break;
+
+                default:
+                    dispatch(updateMessages(response))
             }
         }
 
@@ -38,7 +56,7 @@ const Provider = ({ children }:any) => {
         return () => {
             socket.close()
         }
-    }, [wsState, user])
+    }, [wsState, user, activeUser])
 
     return (<store.Provider value={{socket:ws, setWsState}}>
         {children}

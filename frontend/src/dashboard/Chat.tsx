@@ -29,7 +29,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     function setMessages() {
         dispatch(setCurrentMsg(initiateMessage.receiver))
     }
-
+    console.log(activeUsers)
     const isOnline = activeUsers.includes(initiateMessage.receiver)
     useEffect(() => {
         if (chatContainerRef.current) {

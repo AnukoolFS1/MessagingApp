@@ -37,12 +37,21 @@ const userSlice = createSlice({
             state.user = action.payload.user;
             state.conversations = action.payload.conversations;
             state.activeUsers = action.payload.activeUsers
+        },
+        addActive: (state, action) => {
+            state.activeUsers.push(action.payload)
+            state.activeUsers = state.activeUsers
+        },
+        removeActive: (state, action) => {
+            state.activeUsers = state.activeUsers.filter((e:string) => {
+                return e!==action.payload
+            })
         }
     }
 })
 
 const [userReducer, userActionUpdate] = [userSlice.reducer, userSlice.actions.updateUser];
-
-export { userReducer, userActionUpdate, initialState}
+const {addActive, removeActive} = userSlice.actions
+export { userReducer, userActionUpdate, initialState, addActive, removeActive}
 
 export type {User}
