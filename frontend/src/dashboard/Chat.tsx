@@ -13,6 +13,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     const {setWsState, socket} = Context()
     const dispatch = useDispatch<AppDispatch>()
     const messages = useSelector((state: RootState) => state.messages.currentMessages)
+    const activeUsers = useSelector((state: RootState) => state.users.activeUsers)
     const allmessages = useSelector((state: RootState) => state.messages.messages)
     const initiateMessage = useSelector((state: RootState) => state.intMessage)
     const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
         dispatch(setCurrentMsg(initiateMessage.receiver))
     }
 
+    const isOnline = activeUsers.includes(initiateMessage.receiver)
     useEffect(() => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -54,6 +56,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     return (
         <div className="Chats">
             <FirstChat active={FDC} onSubmit={onSubmit} />
+            <div className="intercolusterHeading" style={{backgroundColor:isOnline?"yellowgreen":""}}><h2>{initiateMessage.receiver}</h2></div>
             <div className="chat" ref={chatContainerRef}>
                 {messages.messages?.map((msg: any) => {
                     return (<MsgUi msg={msg} key={msg.updatedAt} cUser={email} />)

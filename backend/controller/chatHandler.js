@@ -16,15 +16,14 @@ const initiateUser = async (req, res) => {
         const user = jwt.verify(token, sKey)
 
         const conversations = await Conversation.find({ users: user.email }, {_id: 0, message:0, _users:0,timeStamp:0, __v: 0}).lean()
-        console.log(conversations)
-        let activeUser = conversations.map(e => {
+        let activeUsers = conversations.map(e => {
             return e.users.filter(e => e!==user.email)[0]
         })
 
-        activeUser = await Users.find({email:{$in: activeUser}}).select('email')
-        console.log(activeUser[0])
+        activeUsers = await Users.find({$and:[{email:{$in: activeUsers}}, {isOnline: true}] }).select('email').lean()
+        activeUsers = activeUsers.map(e => e.email)
 
-        res.status(200).json({ user, conversations })
+        res.status(200).json({ user, conversations, activeUsers })
     } else {
         res.status(403).json({ msg: "auth failed" })
     }

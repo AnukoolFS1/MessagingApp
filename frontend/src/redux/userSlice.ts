@@ -12,6 +12,7 @@ interface User {
 interface IS {
     user: User,
     conversations:any,
+    activeUsers:string[]
     // messages:any
 }
 
@@ -25,6 +26,7 @@ const initialState: IS = {
         isOnline: false
     },
     conversations :[],
+    activeUsers:[]
 }
 
 const userSlice = createSlice({
@@ -34,6 +36,7 @@ const userSlice = createSlice({
         updateUser: (state, action) => {
             state.user = action.payload.user;
             state.conversations = action.payload.conversations;
+            state.activeUsers = action.payload.activeUsers
         }
     }
 })

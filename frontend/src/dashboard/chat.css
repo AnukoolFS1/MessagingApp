@@ -52,6 +52,13 @@
     resize: none;
 }
 
+.intercolusterHeading{
+    background-color: #8080804d;
+    padding: .2rem .8rem;
+    border-bottom: 1px solid grey;
+    margin-bottom: .5rem;
+}
+
 @keyframes comein {
     from {
         opacity: .3;
