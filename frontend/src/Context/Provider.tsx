@@ -9,7 +9,6 @@ const Provider = ({ children }:any) => {
     const [ws, setWs] = useState<WebSocket | null>(null)
     const dispatch = useDispatch<AppDispatch>()
     const user = useSelector((state:RootState) => state.users.user);
-    // const activeUser = useSelector((state:RootState) => state.users.activeUsers)
     const [wsState, setWsState] = useState<number>(0)
     
     useEffect(() => {
@@ -21,11 +20,7 @@ const Provider = ({ children }:any) => {
 
         socket.onmessage = (event: MessageEvent) => {
             const response = JSON.parse(event.data)
-            // if (response.errMsg) { 
-            //     alert(response.errMsg) }
-            // else {
-            //     dispatch(updateMessages(response))
-            // }
+            
             switch(response.status){
                 case 400:
                     alert(response.errMsg);

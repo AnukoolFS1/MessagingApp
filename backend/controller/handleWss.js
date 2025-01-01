@@ -6,14 +6,22 @@ const {statusOff, statusOn} = require("./userHandler")
 // save user logins
 const userConnections = new Map();
 
+function sendToreceipents(receiver,data){
+    if(typeof(data) === 'string'){
+        const receipentWs = userConnections.get(receiver)
+        if(receipentWs && (receipentWs.readyState === WebSocket.OPEN)){
+            receipentWs.send(data)
+        }
+    }else{
+        console.log("error occured at func sendToreceipents, arguements were expected to be string type")
+    }
+}
+
 async function sendUserStat(user,status){
     const {activeUsers} = await checkOnline(user)
     const payload = JSON.stringify({status, user})
     for(let users of activeUsers){
-        const receipentWs = userConnections.get(users);
-        if(receipentWs && (receipentWs.readyState === WebSocket.OPEN)){
-            receipentWs.send(payload)
-        }
+        sendToreceipents(users, payload)
     }
 }
 
@@ -33,11 +41,8 @@ wss.on("connection", (ws) => {
         else {
             const chats = await initiateMessage(data)
             ws.send(JSON.stringify(chats))
-
-            const receipentWs = userConnections.get(data.receiver)
-            if(receipentWs && (receipentWs.readyState === WebSocket.OPEN)){
-                receipentWs.send(JSON.stringify(await fetchMessages(data.receiver)))
-            }
+            const receiversChats = JSON.stringify(await fetchMessages(data.receiver))
+            sendToreceipents(data.receiver, receiversChats)
         }
     })
 
@@ -46,14 +51,7 @@ wss.on("connection", (ws) => {
             if(connection === ws) {
                 await statusOff(user); console.log(user);
                 userConnections.delete(user)
-
-                const {activeUsers} = await checkOnline(user)
-                for(let users of activeUsers){
-                    const receipentWs = userConnections.get(users);
-                    if(receipentWs && (receipentWs.readyState === WebSocket.OPEN)){
-                        receipentWs.send(JSON.stringify({status: 0, user}))
-                    }
-                }
+                await sendUserStat(user, 0)
                 break;
             }
         }
