@@ -3,7 +3,6 @@
 }
 
 .dashboard > div{
-    /* border: 1px solid grey; */
     flex: 4;
     height: 84.5vh;
 }
@@ -15,7 +14,6 @@
 
 .interlocutors ul{
     margin: 0;
-    /* border: 1px solid green; */
     list-style-type: none;
 }
 

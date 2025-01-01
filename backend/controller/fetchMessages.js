@@ -2,6 +2,8 @@
 const Conversation = require('../model/conversation');
 const Messages = require('../model/message');
 const Users = require('../model/users')
+
+
 async function fetchMessages(user) {
     try {
         const conversations = await Conversation.find({ users: user })

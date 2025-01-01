@@ -16,7 +16,6 @@ const registerUser = async (req, res) => {
         return res.status(400).json({ msg: "All fields are required" });
     }
 
-
     try {
         const result = await users.create(user)
 
@@ -26,7 +25,6 @@ const registerUser = async (req, res) => {
         console.log(err.message)
         res.status(400).json({ msg: err.message })
     }
-    // res.status(201).json({ msg: "done" })
 }
 
 // login user
@@ -69,7 +67,6 @@ const loginUser = async (req, res) => {
         console.error('something went wrong', err)
         res.writeHead(500, { "Content-Type": "application/json" })
         res.end(JSON.stringify({ msg: 'something went wrong' }))
-        // res.status(500).json({msg:"server is unable to perform task"})
     }
 
 }

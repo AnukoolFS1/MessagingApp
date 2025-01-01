@@ -6,8 +6,6 @@ import { setCurrentMsg } from "../redux/messagesSlice";
 import MsgUi from "./Messageui";
 import { setMessage, initMsg } from "../redux/initiateMessage";
 import Context from "../Context/Context";
-// import axios from 'axios';
-
 
 const Chat = ({ email, FDC, setFDC }: any) => {
     const {setWsState, socket} = Context()
@@ -29,8 +27,9 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     function setMessages() {
         dispatch(setCurrentMsg(initiateMessage.receiver))
     }
-    console.log(activeUsers)
+
     const isOnline = activeUsers.includes(initiateMessage.receiver)
+    
     useEffect(() => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
