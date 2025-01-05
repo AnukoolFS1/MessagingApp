@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     border-left: 1px solid grey;
+    background-color: #0A97B0;
 }
 
 .chat {
@@ -31,32 +32,34 @@
     flex-direction: column;
     position: fixed;
     border-radius: 1rem;
-    top: calc(50% - 14rem);
-    left: calc(50% - 18.5rem);
-    background-color: darkcyan;
+    top: calc(50% - 25vh);
+    left: calc(50% - 25vw);
+    background-color: darkslategrey;
     transition: .3s all linear;
     animation: comein .3s linear 1 forwards;
 }
 
 .firstChat input {
-    width: 20vw;
+    width: 20rem;
     height: 10vh;
     font-size: 1.5rem;
     font-family: system-ui;
+    padding: 8px;
 }
 
 .firstChat textarea {
     font-size: 1.2rem;
-    width: 40vw;
+    width: 50vw;
     font-family: system-ui;
     resize: none;
 }
 
 .intercolusterHeading{
-    background-color: #8080804d;
+    background-color: #808080;
     padding: .2rem .8rem;
-    border-bottom: 1px solid grey;
-    margin-bottom: .5rem;
+    box-shadow: 1px 1px 10px #0000004d;
+    text-transform: uppercase;
+    font-size: .8rem;
 }
 
 @keyframes comein {

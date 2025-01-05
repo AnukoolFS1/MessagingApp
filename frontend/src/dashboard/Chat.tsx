@@ -55,7 +55,7 @@ const Chat = ({ email, FDC, setFDC }: any) => {
     return (
         <div className="Chats">
             <FirstChat active={FDC} onSubmit={onSubmit} />
-            <div className="intercolusterHeading" style={{backgroundColor:isOnline?"yellowgreen":""}}><h2>{initiateMessage.receiver}</h2></div>
+            <div className="intercolusterHeading" style={{backgroundColor:isOnline?"#118B50":""}}><h2>{initiateMessage.receiver}</h2></div>
             <div className="chat" ref={chatContainerRef}>
                 {messages.messages?.map((msg: any) => {
                     return (<MsgUi msg={msg} key={msg.updatedAt} cUser={email} />)

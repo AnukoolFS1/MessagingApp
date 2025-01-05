@@ -45,7 +45,7 @@ export default function Signup({ className }: Props) {
         e.preventDefault();
         const formData = new FormData()
 
-        for(const key in userData){
+        for (const key in userData) {
             formData.append(key, userData[key as keyof UserData])
         }
         try {
@@ -76,17 +76,19 @@ export default function Signup({ className }: Props) {
                 <h1>Signup</h1>
 
                 <form className={className}>
-                    <Input id="name" className="name" name="name" value="Name" onChange={handleUserInput} />
-                    <Input id="email-signup" className="email" name="email" value="Email" onChange={handleUserInput} />
-                    <Input id="phone" className="phone" name="phone" value="Phone" onChange={handleUserInput} />
                     <div>
-                        <select name="role" id="role" value={value} onChange={selectChange} style={selectStyle}>
-                            {role.map((e: string, i: number): JSX.Element => (
-                                <option value={e} key={i} style={{ color: i === 0 ? "grey" : "white" }}>{e}</option>
-                            ))}
-                        </select>
+                        <Input id="name" className="name" name="name" value="Name" onChange={handleUserInput} />
+                        <Input id="email-signup" className="email" name="email" value="Email" onChange={handleUserInput} />
+                        <Input id="phone" className="phone" name="phone" value="Phone" onChange={handleUserInput} />
+                        <div>
+                            <select name="role" id="role" value={value} onChange={selectChange} style={selectStyle}>
+                                {role.map((e: string, i: number): JSX.Element => (
+                                    <option value={e} key={i} style={{ color: i === 0 ? "grey" : "white" }}>{e}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <Input id="password-signup" className="password" name="password" value="Password" onChange={handleUserInput} />
                     </div>
-                    <Input id="password-signup" className="password" name="password" value="Password" onChange={handleUserInput} />
                     <div>
                         <button onClick={handleOnSubmit}>Signup</button>
                         <button onClick={GotoLogin}>Already have an account!</button>

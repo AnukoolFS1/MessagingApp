@@ -21,7 +21,6 @@ const App = () => {
     return (
         <section>
             <h1 className="heading">{username || "The ChatApp"} {username&& <button className="logout" onClick={logout}>Logout</button>}</h1>
-            <hr />
             <Outlet></Outlet>
         </section>
     )

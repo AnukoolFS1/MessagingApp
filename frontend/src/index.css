@@ -68,6 +68,9 @@ button:focus-visible {
 
 .heading{
   padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.5px solid #f5f5dc33;
 }
 
 .signup select{
@@ -79,7 +82,7 @@ button:focus-visible {
 
 
 .input > input {
-  width: 300px;
+  width: 307px;
   height: 7vh;
   font-size: 1.5rem;
   outline: none;
@@ -107,11 +110,6 @@ button:focus-visible {
 
 .input > input:valid + label {
   display: none;
-}
-
-.heading{
-  display: flex;
-  justify-content: space-between;
 }
 
 .logout{

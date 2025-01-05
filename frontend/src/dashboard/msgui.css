@@ -4,14 +4,13 @@
 }
 
 .msgui {
-    border: 1px solid grey;
     width: 15rem;
-    padding: 1.5rem;
+    padding: .5rem 1rem;
     border-radius: 4px;
-    background-color: #2E5077;
+    background-color: rgb(80, 80, 80);
     box-shadow: 2px 2px 8px black;
 }
 
 .msgui sub {
-    color: #79D7BE;
+    color: #00ffbb;
 }
